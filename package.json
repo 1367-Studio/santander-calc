@@ -1,5 +1,5 @@
 {
-  "name": "@1367-studio/santander-calc",
+  "name": "santander-calc",
   "version": "1.0.0",
   "description": "Santander revolving credit calculator widget — React component and vanilla JS loader",
   "main": "index.js",
