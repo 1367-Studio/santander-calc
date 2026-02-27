@@ -1,18 +1,18 @@
 # santander-calc
 
-Widget de calculadora de crédito rotativo Santander. Funciona em **HTML puro** e **React/Next.js**.
+Santander revolving credit calculator widget. Works in **plain HTML** and **React / Next.js**.
 
 ---
 
-## Como funciona
+## How it works
 
-O widget renderiza um botão inline que ao ser clicado abre um modal com o cronograma de parcelas do crédito rotativo. Todo o cálculo acontece no browser — sem backend.
+The widget renders an inline button that opens a modal showing the revolving credit repayment schedule. All calculations happen in the browser — no backend required.
 
 ---
 
-## HTML puro
+## Plain HTML
 
-Cola o `<script>` onde quiseres que o botão apareça:
+Drop the `<script>` tag wherever you want the button to appear:
 
 ```html
 <script
@@ -22,22 +22,21 @@ Cola o `<script>` onde quiseres que o botão apareça:
 </script>
 ```
 
-### Atributos disponíveis
+### Available attributes
 
-| Atributo | Descrição | Padrão |
+| Attribute | Description | Default |
 |---|---|---|
-| `data-total` | Valor total em euros | `0` |
-| `data-lang` | Idioma: `fr` `en` `nl` `de` | `fr` |
-| `data-primary` | Cor primária (hex) | `#e60000` |
-| `data-bg` | Cor de fundo do modal (hex) | `#ffffff` |
-| `data-header-bg` | Cor de fundo do cabeçalho (hex) | igual ao primary |
-| `data-header-fg` | Cor do texto do cabeçalho (hex) | `#ffffff` |
-| `data-btn-text` | Texto personalizado do botão | tradução automática |
-| `data-width` | Largura do botão | `auto` |
-| `data-height` | Altura do botão | `50px` |
-| `data-position` | Posição do botão (apenas modo fixed) | `bottom-right` |
+| `data-total` | Total amount in euros | `0` |
+| `data-lang` | Language: `fr` `en` `nl` `de` | `fr` |
+| `data-primary` | Primary hex color | `#e60000` |
+| `data-bg` | Modal background color (hex) | `#ffffff` |
+| `data-header-bg` | Modal header background (hex) | same as primary |
+| `data-header-fg` | Modal header text color (hex) | `#ffffff` |
+| `data-btn-text` | Custom button label | auto-translated |
+| `data-width` | Button width | `auto` |
+| `data-height` | Button height | `50px` |
 
-### Exemplo com todas as opções
+### Full example
 
 ```html
 <script
@@ -53,7 +52,7 @@ Cola o `<script>` onde quiseres que o botão apareça:
 </script>
 ```
 
-### Plataformas
+### Platform examples
 
 **Shopify Liquid:**
 ```liquid
@@ -77,13 +76,13 @@ Cola o `<script>` onde quiseres que o botão apareça:
 
 ## React / Next.js
 
-### Instalação
+### Installation
 
 ```bash
 npm install santander-calc
 ```
 
-### Uso
+### Usage
 
 ```tsx
 import { SantanderCalcButton } from "santander-calc";
@@ -91,7 +90,7 @@ import { SantanderCalcButton } from "santander-calc";
 export default function CartPage() {
   return (
     <div>
-      <button>Finalizar compra</button>
+      <button>Checkout</button>
       <SantanderCalcButton total={1250} lang="fr" />
     </div>
   );
@@ -100,19 +99,19 @@ export default function CartPage() {
 
 ### Props
 
-| Prop | Tipo | Descrição | Padrão |
+| Prop | Type | Description | Default |
 |---|---|---|---|
-| `total` | `number` | Valor total em euros | — |
-| `lang` | `"fr" \| "en" \| "nl" \| "de"` | Idioma | `"fr"` |
-| `primary` | `string` | Cor primária (hex) | `"#e60000"` |
-| `bg` | `string` | Cor de fundo do modal | `"#ffffff"` |
-| `headerBg` | `string` | Cor de fundo do cabeçalho | igual ao primary |
-| `headerFg` | `string` | Cor do texto do cabeçalho | `"#ffffff"` |
-| `btnText` | `string` | Texto personalizado do botão | tradução automática |
-| `className` | `string` | Classe CSS do botão | — |
-| `style` | `object` | Estilos inline do botão | — |
+| `total` | `number` | Total amount in euros | — |
+| `lang` | `"fr" \| "en" \| "nl" \| "de"` | Language | `"fr"` |
+| `primary` | `string` | Primary hex color | `"#e60000"` |
+| `bg` | `string` | Modal background color | `"#ffffff"` |
+| `headerBg` | `string` | Modal header background | same as primary |
+| `headerFg` | `string` | Modal header text color | `"#ffffff"` |
+| `btnText` | `string` | Custom button label | auto-translated |
+| `className` | `string` | CSS class on the button | — |
+| `style` | `object` | Inline styles on the button | — |
 
-### Exemplo com todas as props
+### Full example
 
 ```tsx
 <SantanderCalcButton
@@ -130,7 +129,7 @@ export default function CartPage() {
 
 ### Next.js (App Router)
 
-O componente já inclui `"use client"` — pode ser importado diretamente em Server Components:
+The component already includes `"use client"` and can be imported directly in Server Components:
 
 ```tsx
 // app/cart/page.tsx (Server Component)
@@ -146,9 +145,9 @@ export default async function CartPage() {
 
 ---
 
-## Idiomas suportados
+## Supported languages
 
-| Código | Idioma |
+| Code | Language |
 |---|---|
 | `fr` | Français |
 | `en` | English |
@@ -157,18 +156,18 @@ export default async function CartPage() {
 
 ---
 
-## Faixas de valor
+## Amount ranges
 
-O calculador cobre automaticamente três faixas:
+The calculator automatically selects the correct repayment schedule based on the total:
 
-| Faixa | Intervalo |
+| Range | Interval |
 |---|---|
-| A | € 0 – € 1.250 |
-| B | € 1.250 – € 5.000 |
-| C | € 5.001 + |
+| A | € 0 – € 1,250 |
+| B | € 1,250 – € 5,000 |
+| C | € 5,001 + |
 
 ---
 
-## Licença
+## License
 
-UNLICENSED — uso privado.
+UNLICENSED — private use only.
