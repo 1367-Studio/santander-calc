@@ -32,7 +32,7 @@ Drop the `<script>` tag wherever you want the button to appear:
 | `data-bg` | Modal background color (hex) | `#ffffff` |
 | `data-header-bg` | Modal header background (hex) | same as primary |
 | `data-header-fg` | Modal header text color (hex) | `#ffffff` |
-| `data-btn-text` | Custom button label | auto-translated |
+| `data-btn-text` | Custom button label (overrides auto-translation) | auto-translated |
 | `data-width` | Button width | `auto` |
 | `data-height` | Button height | `50px` |
 
@@ -110,6 +110,10 @@ export default function CartPage() {
 | `btnText` | `string` | Custom button label | auto-translated |
 | `className` | `string` | CSS class on the button | — |
 | `style` | `object` | Inline styles on the button | — |
+
+> **Button label** — The button text is automatically translated based on `lang`:
+> `fr` → "Voir l'échéancier" · `en` → "See schedule" · `nl` → "Schema bekijken" · `de` → "Plan anzeigen"
+> Use `btnText` to override with a fixed label regardless of language.
 
 ### Full example
 
