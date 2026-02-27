@@ -1,29 +1,61 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculateur Santander</title>
   <link rel="stylesheet" href="santander-revolving.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      /* Passes all clicks through to the parent page by default */
+      pointer-events: none;
+    }
+
+    /* Button and modal capture clicks */
+    #santander-revolving-btn-inline,
+    .sr-modal {
+      pointer-events: auto;
+    }
+  </style>
 </head>
 <body>
+  <script>
+    const p = new URLSearchParams(location.search);
 
-  <div
-    id="santander-revolving-root-1"
-    data-render-inline="true"
-    data-total="1250"
-    data-language="fr"
-    data-use-i18n-legal="true"
-    data-revolving-file-a="revolving_bands_1250.json"
-    data-revolving-file-b="revolving_bands_1250_5000.json"
-    data-revolving-file-c="revolving_bands_5000_plus.json"
-  >
-    <button
-      id="santander-revolving-btn-inline"
-      type="button"
-      style="visibility:hidden; opacity:0;"
-    >Voir l'échéancier</button>
-  </div>
+    // Build root element with all params from URL
+    const root = document.createElement('div');
+    root.id = 'santander-revolving-root-1';
+    root.dataset.renderInline  = 'true';
+    root.dataset.useI18nLegal  = 'true';
+    root.dataset.total         = p.get('total')     || '0';
+    root.dataset.language      = p.get('lang')      || 'fr';
+    root.dataset.primaryColor  = p.get('primary')   || '#e60000';
+    root.dataset.bgColor       = p.get('bg')        || '#ffffff';
+    root.dataset.headerBg      = p.get('headerBg')  || p.get('primary') || '#e60000';
+    root.dataset.headerFg      = p.get('headerFg')  || '#ffffff';
+    root.dataset.revolvingFileA = 'revolving_bands_1250.json';
+    root.dataset.revolvingFileB = 'revolving_bands_1250_5000.json';
+    root.dataset.revolvingFileC = 'revolving_bands_5000_plus.json';
+
+    // Button — fixed position inside the full-screen iframe
+    const btn = document.createElement('button');
+    btn.id   = 'santander-revolving-btn-inline';
+    btn.type = 'button';
+    btn.style.cssText = 'visibility:hidden; opacity:0; position:fixed;';
+
+    // Position via URL param: bottom-right (default), bottom-left, top-right, top-left
+    const pos = (p.get('position') || 'bottom-right').toLowerCase();
+    btn.style.bottom = pos.includes('top')    ? 'auto' : '20px';
+    btn.style.top    = pos.includes('top')    ? '20px' : 'auto';
+    btn.style.right  = pos.includes('left')   ? 'auto' : '20px';
+    btn.style.left   = pos.includes('left')   ? '20px' : 'auto';
+
+    root.appendChild(btn);
+    document.body.appendChild(root);
+  </script>
 
   <script src="santander-revolving.js"></script>
 </body>
