@@ -7,7 +7,8 @@
   "files": [
     "index.js",
     "SantanderCalcButton.jsx",
-    "loader.js"
+    "loader.js",
+    "README.md"
   ],
   "keywords": ["santander", "revolving", "credit", "calculator", "widget"],
   "license": "UNLICENSED",
