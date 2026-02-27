@@ -1,0 +1,29 @@
+{
+  "name": "@1367-studio/santander-calc",
+  "version": "1.0.0",
+  "description": "Santander revolving credit calculator widget — React component and vanilla JS loader",
+  "main": "index.js",
+  "module": "index.js",
+  "files": [
+    "index.js",
+    "SantanderCalcButton.jsx",
+    "loader.js"
+  ],
+  "keywords": ["santander", "revolving", "credit", "calculator", "widget"],
+  "license": "UNLICENSED",
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-dom": { "optional": true }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1367-Studio/santander-calc.git"
+  }
+}
