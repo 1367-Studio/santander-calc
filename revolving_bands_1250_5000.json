@@ -1,0 +1,78 @@
+{
+  "id": "B",
+  "range": {
+    "min": 1250,
+    "max": 5000
+  },
+  "apr_nominal": 0.1308,
+  "apr_representative": 0.1444,
+  "open_fee_monthly": 0.001,
+  "bands": [
+    {
+      "months": 1,
+      "amount": 60.0
+    },
+    {
+      "months": 1,
+      "amount": 57.5
+    },
+    {
+      "months": 1,
+      "amount": 55.0
+    },
+    {
+      "months": 1,
+      "amount": 52.5
+    },
+    {
+      "months": 1,
+      "amount": 50.0
+    },
+    {
+      "months": 1,
+      "amount": 47.5
+    },
+    {
+      "months": 2,
+      "amount": 45.0
+    },
+    {
+      "months": 1,
+      "amount": 42.5
+    },
+    {
+      "months": 1,
+      "amount": 40.0
+    },
+    {
+      "months": 2,
+      "amount": 37.5
+    },
+    {
+      "months": 2,
+      "amount": 35.0
+    },
+    {
+      "months": 1,
+      "amount": 32.5
+    },
+    {
+      "months": 2,
+      "amount": 30.0
+    },
+    {
+      "months": 2,
+      "amount": 27.5
+    },
+    {
+      "months": 19,
+      "amount": 25.0
+    },
+    {
+      "months": "final"
+    }
+  ],
+  "legal_lines": [
+    "Pour une [[ouverture de crédit à durée indéterminée]] entre 1 250 € et 5 000 € avec un [[Taux Annuel Effectif Global (TAEG)]] de 14,44% (le taux débiteur [[variable]] de 15,12% et les frais de carte 0,10% par mois du capital restant dû). Taux valable à 27/05/2025."
+  ]
+}

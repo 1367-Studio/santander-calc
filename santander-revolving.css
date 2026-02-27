@@ -1,0 +1,145 @@
+:root {
+  --sr-primary: #e60000;
+  --sr-bg: #fff;
+  --sr-header-bg: var(--sr-primary);
+  --sr-header-fg: #fff;
+}
+
+.sr-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
+.sr-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+.sr-modal__content {
+  position: relative;
+  width: min(780px, 92vw);
+  max-height: min(86vh, 1000px);
+  background: var(--sr-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+}
+.sr-modal__header {
+  background: var(--sr-header-bg);
+  color: var(--sr-header-fg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sr-modal__header h3 {
+  color: var(--sr-header-fg);
+  margin: 0 auto;
+  font-size: 2.125rem;
+}
+.sr-modal__close {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 2.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.sr-modal__body {
+  padding: 12px 20px 18px;
+  overflow: auto;
+}
+
+.sr-tabs {
+  margin-bottom: 8px;
+}
+.sr-tablist {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sr-tab {
+  border: 1px solid #ddd;
+  background: #fafafa;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.sr-tab.is-active {
+  background: var(--sr-primary);
+  color: #fff;
+  border-color: var(--sr-primary);
+}
+
+.sr-intro-top p {
+  margin: 0.25rem 0;
+}
+
+.sr-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+.sr-table th,
+.sr-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+}
+.sr-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f7f7f7;
+  z-index: 1;
+}
+
+.sr-legal {
+  background: #f6f6f6;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 17px;
+}
+.sr-legal--small {
+  font-size: 14px;
+  line-height: 17px;
+}
+
+body.sr-open {
+  overflow: hidden;
+}
+
+.btn.sr-primary {
+  background: var(--sr-primary);
+  color: #fff;
+  align-items: flex-end;
+}
+
+.sr-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+.sr-table tbody tr:hover {
+  background: #f2f2f2;
+}
+
+.header-banner {
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-text {
+  font-weight: 700;
+  color: #2d2d2d;
+  font-size: 18px;
+  line-height: 21px;
+}

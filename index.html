@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculateur Santander</title>
+  <link rel="stylesheet" href="santander-revolving.css">
+</head>
+<body>
+
+  <div
+    id="santander-revolving-root-1"
+    data-render-inline="true"
+    data-total="1250"
+    data-language="fr"
+    data-use-i18n-legal="true"
+    data-revolving-file-a="revolving_bands_1250.json"
+    data-revolving-file-b="revolving_bands_1250_5000.json"
+    data-revolving-file-c="revolving_bands_5000_plus.json"
+  >
+    <button
+      id="santander-revolving-btn-inline"
+      type="button"
+      style="visibility:hidden; opacity:0;"
+    >Voir l'échéancier</button>
+  </div>
+
+  <script src="santander-revolving.js"></script>
+</body>
+</html>
