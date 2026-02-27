@@ -43,11 +43,16 @@
     btn.id          = 'santander-revolving-btn-inline';
     btn.type        = 'button';
     btn.textContent = p.get('btnText') || labels[lang] || labels.fr;
-    // When autoopen=true the iframe is full-screen for the modal only — hide the button
     const autoopen = p.get('autoopen') === 'true';
-    btn.style.cssText = autoopen
-      ? 'display:none;'
-      : 'visibility:hidden; opacity:0; width:100%; box-sizing:border-box;';
+    btn.style.cssText = 'visibility:hidden; opacity:0; width:100%; box-sizing:border-box;';
+
+    // When autoopen=true inject a !important rule so installInlineButton()
+    // can never override it with inline styles
+    if (autoopen) {
+      var hideStyle = document.createElement('style');
+      hideStyle.textContent = '#santander-revolving-btn-inline { display: none !important; }';
+      document.head.appendChild(hideStyle);
+    }
 
     root.appendChild(btn);
     document.body.appendChild(root);
