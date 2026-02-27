@@ -1,6 +1,6 @@
 {
   "name": "santander-calc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Santander revolving credit calculator widget — React component and vanilla JS loader",
   "main": "index.js",
   "module": "index.js",

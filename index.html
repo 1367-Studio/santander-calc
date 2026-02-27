@@ -58,6 +58,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var modal = document.getElementById('santander-revolving-modal');
+      var autoopen = new URLSearchParams(location.search).get('autoopen') === 'true';
 
       // Wire close buttons to notify loader.js
       if (modal) {
@@ -71,8 +72,12 @@
           });
       }
 
-      // Auto-open modal if requested (used by loader.js)
-      if (new URLSearchParams(location.search).get('autoopen') === 'true') {
+      // Auto-open: hide the button (installInlineButton may have re-shown it)
+      // and open the modal directly
+      if (autoopen) {
+        var btn = document.getElementById('santander-revolving-btn-inline');
+        if (btn) btn.style.display = 'none';
+
         var root = document.getElementById('santander-revolving-root-1');
         if (root && root.__sr_instance) {
           root.__sr_instance.open();
