@@ -52,18 +52,10 @@
   <script src="santander-revolving.js"></script>
 
   <script>
-    // After RevolvingCalc boots, wire postMessage so loader.js can
-    // expand / shrink the iframe on open and close.
     document.addEventListener('DOMContentLoaded', function () {
-      var btn   = document.getElementById('santander-revolving-btn-inline');
       var modal = document.getElementById('santander-revolving-modal');
 
-      if (btn) {
-        btn.addEventListener('click', function () {
-          window.parent.postMessage('sr:open', '*');
-        });
-      }
-
+      // Wire close buttons to notify loader.js
       if (modal) {
         modal.querySelector('.sr-modal__close')
           ?.addEventListener('click', function () {
@@ -73,6 +65,14 @@
           ?.addEventListener('click', function () {
             window.parent.postMessage('sr:close', '*');
           });
+      }
+
+      // Auto-open modal if requested (used by loader.js)
+      if (new URLSearchParams(location.search).get('autoopen') === 'true') {
+        var root = document.getElementById('santander-revolving-root-1');
+        if (root && root.__sr_instance) {
+          root.__sr_instance.open();
+        }
       }
     });
   </script>
