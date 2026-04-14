@@ -7,70 +7,29 @@
   "apr_nominal": 0.1512,
   "apr_representative": 0.1649,
   "open_fee_monthly": 0.001,
-  "bands": [
-    {
-      "months": 1,
-      "amount": 60.0
-    },
-    {
-      "months": 1,
-      "amount": 57.5
-    },
-    {
-      "months": 1,
-      "amount": 55.0
-    },
-    {
-      "months": 1,
-      "amount": 52.5
-    },
-    {
-      "months": 1,
-      "amount": 50.0
-    },
-    {
-      "months": 1,
-      "amount": 47.5
-    },
-    {
-      "months": 2,
-      "amount": 45.0
-    },
-    {
-      "months": 1,
-      "amount": 42.5
-    },
-    {
-      "months": 1,
-      "amount": 40.0
-    },
-    {
-      "months": 2,
-      "amount": 37.5
-    },
-    {
-      "months": 2,
-      "amount": 35.0
-    },
-    {
-      "months": 1,
-      "amount": 32.5
-    },
-    {
-      "months": 2,
-      "amount": 30.0
-    },
-    {
-      "months": 2,
-      "amount": 27.5
-    },
-    {
-      "months": 19,
-      "amount": 25.0
-    },
-    {
-      "months": "final"
-    }
+  "payment_step": 2.5,
+  "min_payment": 25.0,
+  "sub_ranges": [
+    { "min": 0,    "max": 444,  "first_payment": 25.0 },
+    { "min": 445,  "max": 488,  "first_payment": 27.5 },
+    { "min": 489,  "max": 533,  "first_payment": 30.0 },
+    { "min": 534,  "max": 577,  "first_payment": 32.5 },
+    { "min": 578,  "max": 622,  "first_payment": 35.0 },
+    { "min": 623,  "max": 666,  "first_payment": 37.5 },
+    { "min": 667,  "max": 710,  "first_payment": 40.0 },
+    { "min": 711,  "max": 755,  "first_payment": 42.5 },
+    { "min": 756,  "max": 799,  "first_payment": 45.0 },
+    { "min": 800,  "max": 844,  "first_payment": 47.5 },
+    { "min": 845,  "max": 888,  "first_payment": 50.0 },
+    { "min": 889,  "max": 933,  "first_payment": 52.5 },
+    { "min": 934,  "max": 977,  "first_payment": 55.0 },
+    { "min": 978,  "max": 1021, "first_payment": 57.5 },
+    { "min": 1022, "max": 1066, "first_payment": 60.0 },
+    { "min": 1067, "max": 1110, "first_payment": 62.5 },
+    { "min": 1111, "max": 1155, "first_payment": 65.0 },
+    { "min": 1156, "max": 1199, "first_payment": 67.5 },
+    { "min": 1200, "max": 1243, "first_payment": 70.0 },
+    { "min": 1244, "max": 1250, "first_payment": 72.5 }
   ],
   "legal_lines": [
     "Pour [[une ouverture de crédit à durée indéterminée]] de 1250 € avec un [[Taux Annuel Effectif Global (TAEG)]] de 16,49% (le taux débiteur [[variable]] de 15,12% et les frais de carte 0,10% par mois du capital restant dû). Taux valable à 27/05/2025."

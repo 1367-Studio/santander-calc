@@ -7,70 +7,113 @@
   "apr_nominal": 0.1308,
   "apr_representative": 0.1444,
   "open_fee_monthly": 0.001,
-  "bands": [
-    {
-      "months": 1,
-      "amount": 60.0
-    },
-    {
-      "months": 1,
-      "amount": 57.5
-    },
-    {
-      "months": 1,
-      "amount": 55.0
-    },
-    {
-      "months": 1,
-      "amount": 52.5
-    },
-    {
-      "months": 1,
-      "amount": 50.0
-    },
-    {
-      "months": 1,
-      "amount": 47.5
-    },
-    {
-      "months": 2,
-      "amount": 45.0
-    },
-    {
-      "months": 1,
-      "amount": 42.5
-    },
-    {
-      "months": 1,
-      "amount": 40.0
-    },
-    {
-      "months": 2,
-      "amount": 37.5
-    },
-    {
-      "months": 2,
-      "amount": 35.0
-    },
-    {
-      "months": 1,
-      "amount": 32.5
-    },
-    {
-      "months": 2,
-      "amount": 30.0
-    },
-    {
-      "months": 2,
-      "amount": 27.5
-    },
-    {
-      "months": 19,
-      "amount": 25.0
-    },
-    {
-      "months": "final"
-    }
+  "payment_step": 2.5,
+  "min_payment": 25.0,
+  "sub_ranges": [
+    { "min": 0,    "max": 444,  "first_payment": 25.0  },
+    { "min": 445,  "max": 489,  "first_payment": 27.5  },
+    { "min": 490,  "max": 533,  "first_payment": 30.0  },
+    { "min": 534,  "max": 578,  "first_payment": 32.5  },
+    { "min": 579,  "max": 622,  "first_payment": 35.0  },
+    { "min": 623,  "max": 667,  "first_payment": 37.5  },
+    { "min": 668,  "max": 711,  "first_payment": 40.0  },
+    { "min": 712,  "max": 756,  "first_payment": 42.5  },
+    { "min": 757,  "max": 800,  "first_payment": 45.0  },
+    { "min": 801,  "max": 845,  "first_payment": 47.5  },
+    { "min": 846,  "max": 889,  "first_payment": 50.0  },
+    { "min": 890,  "max": 934,  "first_payment": 52.5  },
+    { "min": 935,  "max": 978,  "first_payment": 55.0  },
+    { "min": 979,  "max": 1023, "first_payment": 57.5  },
+    { "min": 1024, "max": 1067, "first_payment": 60.0  },
+    { "min": 1068, "max": 1112, "first_payment": 62.5  },
+    { "min": 1113, "max": 1156, "first_payment": 65.0  },
+    { "min": 1157, "max": 1201, "first_payment": 67.5  },
+    { "min": 1202, "max": 1245, "first_payment": 70.0  },
+    { "min": 1246, "max": 1290, "first_payment": 72.5  },
+    { "min": 1291, "max": 1334, "first_payment": 75.0  },
+    { "min": 1335, "max": 1379, "first_payment": 77.5  },
+    { "min": 1380, "max": 1423, "first_payment": 80.0  },
+    { "min": 1424, "max": 1468, "first_payment": 82.5  },
+    { "min": 1469, "max": 1512, "first_payment": 85.0  },
+    { "min": 1513, "max": 1557, "first_payment": 87.5  },
+    { "min": 1558, "max": 1601, "first_payment": 90.0  },
+    { "min": 1602, "max": 1646, "first_payment": 92.5  },
+    { "min": 1647, "max": 1690, "first_payment": 95.0  },
+    { "min": 1691, "max": 1735, "first_payment": 97.5  },
+    { "min": 1736, "max": 1779, "first_payment": 100.0 },
+    { "min": 1780, "max": 1824, "first_payment": 102.5 },
+    { "min": 1825, "max": 1868, "first_payment": 105.0 },
+    { "min": 1869, "max": 1913, "first_payment": 107.5 },
+    { "min": 1914, "max": 1957, "first_payment": 110.0 },
+    { "min": 1958, "max": 2002, "first_payment": 112.5 },
+    { "min": 2003, "max": 2046, "first_payment": 115.0 },
+    { "min": 2047, "max": 2091, "first_payment": 117.5 },
+    { "min": 2092, "max": 2135, "first_payment": 120.0 },
+    { "min": 2136, "max": 2180, "first_payment": 122.5 },
+    { "min": 2181, "max": 2224, "first_payment": 125.0 },
+    { "min": 2225, "max": 2269, "first_payment": 127.5 },
+    { "min": 2270, "max": 2313, "first_payment": 130.0 },
+    { "min": 2314, "max": 2358, "first_payment": 132.5 },
+    { "min": 2359, "max": 2402, "first_payment": 135.0 },
+    { "min": 2403, "max": 2447, "first_payment": 137.5 },
+    { "min": 2448, "max": 2491, "first_payment": 140.0 },
+    { "min": 2492, "max": 2536, "first_payment": 142.5 },
+    { "min": 2537, "max": 2580, "first_payment": 145.0 },
+    { "min": 2581, "max": 2625, "first_payment": 147.5 },
+    { "min": 2626, "max": 2669, "first_payment": 150.0 },
+    { "min": 2670, "max": 2714, "first_payment": 152.5 },
+    { "min": 2715, "max": 2758, "first_payment": 155.0 },
+    { "min": 2759, "max": 2803, "first_payment": 157.5 },
+    { "min": 2804, "max": 2847, "first_payment": 160.0 },
+    { "min": 2848, "max": 2892, "first_payment": 162.5 },
+    { "min": 2893, "max": 2936, "first_payment": 165.0 },
+    { "min": 2937, "max": 2981, "first_payment": 167.5 },
+    { "min": 2982, "max": 3025, "first_payment": 170.0 },
+    { "min": 3026, "max": 3070, "first_payment": 172.5 },
+    { "min": 3071, "max": 3114, "first_payment": 175.0 },
+    { "min": 3115, "max": 3159, "first_payment": 177.5 },
+    { "min": 3160, "max": 3203, "first_payment": 180.0 },
+    { "min": 3204, "max": 3248, "first_payment": 182.5 },
+    { "min": 3249, "max": 3292, "first_payment": 185.0 },
+    { "min": 3293, "max": 3337, "first_payment": 187.5 },
+    { "min": 3338, "max": 3381, "first_payment": 190.0 },
+    { "min": 3382, "max": 3426, "first_payment": 192.5 },
+    { "min": 3427, "max": 3470, "first_payment": 195.0 },
+    { "min": 3471, "max": 3515, "first_payment": 197.5 },
+    { "min": 3516, "max": 3559, "first_payment": 200.0 },
+    { "min": 3560, "max": 3604, "first_payment": 202.5 },
+    { "min": 3605, "max": 3648, "first_payment": 205.0 },
+    { "min": 3649, "max": 3693, "first_payment": 207.5 },
+    { "min": 3694, "max": 3737, "first_payment": 210.0 },
+    { "min": 3738, "max": 3782, "first_payment": 212.5 },
+    { "min": 3783, "max": 3826, "first_payment": 215.0 },
+    { "min": 3827, "max": 3871, "first_payment": 217.5 },
+    { "min": 3872, "max": 3915, "first_payment": 220.0 },
+    { "min": 3916, "max": 3960, "first_payment": 222.5 },
+    { "min": 3961, "max": 4004, "first_payment": 225.0 },
+    { "min": 4005, "max": 4049, "first_payment": 227.5 },
+    { "min": 4050, "max": 4093, "first_payment": 230.0 },
+    { "min": 4094, "max": 4138, "first_payment": 232.5 },
+    { "min": 4139, "max": 4182, "first_payment": 235.0 },
+    { "min": 4183, "max": 4227, "first_payment": 237.5 },
+    { "min": 4228, "max": 4271, "first_payment": 240.0 },
+    { "min": 4272, "max": 4316, "first_payment": 242.5 },
+    { "min": 4317, "max": 4360, "first_payment": 245.0 },
+    { "min": 4361, "max": 4405, "first_payment": 247.5 },
+    { "min": 4406, "max": 4449, "first_payment": 250.0 },
+    { "min": 4450, "max": 4494, "first_payment": 252.5 },
+    { "min": 4495, "max": 4538, "first_payment": 255.0 },
+    { "min": 4539, "max": 4583, "first_payment": 257.5 },
+    { "min": 4584, "max": 4627, "first_payment": 260.0 },
+    { "min": 4628, "max": 4672, "first_payment": 262.5 },
+    { "min": 4673, "max": 4716, "first_payment": 265.0 },
+    { "min": 4717, "max": 4761, "first_payment": 267.5 },
+    { "min": 4762, "max": 4805, "first_payment": 270.0 },
+    { "min": 4806, "max": 4850, "first_payment": 272.5 },
+    { "min": 4851, "max": 4894, "first_payment": 275.0 },
+    { "min": 4895, "max": 4939, "first_payment": 277.5 },
+    { "min": 4940, "max": 4983, "first_payment": 280.0 },
+    { "min": 4984, "max": 5000, "first_payment": 282.5 }
   ],
   "legal_lines": [
     "Pour une [[ouverture de crédit à durée indéterminée]] entre 1 250 € et 5 000 € avec un [[Taux Annuel Effectif Global (TAEG)]] de 14,44% (le taux débiteur [[variable]] de 15,12% et les frais de carte 0,10% par mois du capital restant dû). Taux valable à 27/05/2025."

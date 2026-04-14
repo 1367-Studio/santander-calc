@@ -231,6 +231,10 @@ class RevolvingCalc {
             `Pour une [[ouverture de crédit à durée indéterminée]] de [[${min}]] et plus avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur variable : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Montant à financer",
+        statFirst:  "1ère mensualité",
+        statMonths: "Nombre de mois",
+        statTotal:  "Total remboursé",
       },
 
       en: {
@@ -258,6 +262,10 @@ class RevolvingCalc {
             `For an [[open-ended credit line]] of [[${min}]] or more with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] (variable borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Amount to finance",
+        statFirst:  "First payment",
+        statMonths: "Total months",
+        statTotal:  "Total repaid",
       },
 
       nl: {
@@ -286,6 +294,10 @@ class RevolvingCalc {
             `Voor een [[doorlopend krediet]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] (variabele debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Te financieren bedrag",
+        statFirst:  "1e betaling",
+        statMonths: "Aantal maanden",
+        statTotal:  "Totaal terugbetaald",
       },
 
       de: {
@@ -314,6 +326,10 @@ class RevolvingCalc {
             `Für eine [[unbefristete Kreditlinie]] ab [[${min}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] (variabler Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
         },
         dateSep: ".",
+        amountLabel: "Finanzierungsbetrag",
+        statFirst:  "1. Monatsrate",
+        statMonths: "Anzahl Monate",
+        statTotal:  "Gesamt zurückgez.",
       },
     };
     return d[l] || d.fr;
@@ -541,7 +557,12 @@ class RevolvingCalc {
       m.innerHTML = `
         <div class="sr-modal__backdrop"></div>
         <div class="sr-modal__content sr-content--tall">
-          <div class="header-banner"><span class="banner-text">${this.t.headerBanner}</span></div>
+          <div class="header-banner">
+            <svg class="banner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/>
+            </svg>
+            <span class="banner-text">${this.t.headerBanner}</span>
+          </div>
           <div class="sr-modal__header">
             <h3>${this.t.scheduleTitle}</h3>
             <button class="sr-modal__close" aria-label="Close">&times;</button>
@@ -550,10 +571,31 @@ class RevolvingCalc {
             <div class="sr-tabs">
               <div class="sr-tablist" role="tablist"></div>
             </div>
+            <div class="sr-amount-wrap">
+              <label class="sr-amount-label" for="sr-amount-input">${this.t.amountLabel}</label>
+              <div class="sr-amount-field">
+                <span class="sr-amount-currency">€</span>
+                <input id="sr-amount-input" class="sr-amount-input" type="number" min="1" step="1" placeholder="0">
+              </div>
+            </div>
             <div class="sr-intro-top">
               <p class="sr-intro-head"></p>
               <p class="sr-intro-sub"></p>
               <p class="sr-applied-range" hidden></p>
+            </div>
+            <div class="sr-stats">
+              <div class="sr-stat sr-stat--primary">
+                <div class="sr-stat__label">${this.t.statFirst}</div>
+                <div class="sr-stat__value sr-stat-first">—</div>
+              </div>
+              <div class="sr-stat">
+                <div class="sr-stat__label">${this.t.statMonths}</div>
+                <div class="sr-stat__value sr-stat-months">—</div>
+              </div>
+              <div class="sr-stat">
+                <div class="sr-stat__label">${this.t.statTotal}</div>
+                <div class="sr-stat__value sr-stat-total">—</div>
+              </div>
             </div>
             <div class="sr-table-wrap">
               <table class="sr-table">
@@ -574,6 +616,16 @@ class RevolvingCalc {
       m.querySelector(".sr-modal__backdrop").addEventListener("click", () => {
         m.style.display = "none";
         document.body.classList.remove("sr-open");
+      });
+
+      // Amount input — debounced live update
+      let _amtTimer;
+      m.querySelector(".sr-amount-input").addEventListener("input", (e) => {
+        clearTimeout(_amtTimer);
+        _amtTimer = setTimeout(() => {
+          const val = parseFloat(e.target.value);
+          if (!isNaN(val) && val > 0) this.updateForTotal(val);
+        }, 350);
       });
     }
     
@@ -674,6 +726,9 @@ class RevolvingCalc {
             de: [this.t.tabA, this.t.tabB, this.t.tabC][idx] || this.t.tabA,
           },
           bands: rule.bands || [],
+          sub_ranges: rule.sub_ranges || null,
+          payment_step: rule.payment_step || 2.5,
+          min_payment: rule.min_payment || 25,
           /**
            * IMPORTANT:
            * If we are forcing i18n legal, we ignore JSON `legal_lines` and leave legal blank.
@@ -733,6 +788,12 @@ class RevolvingCalc {
     this.modal.querySelector(".sr-date-stamp").textContent = "";
     const pill = this.modal.querySelector(".sr-applied-range");
     if (pill) pill.hidden = true;
+    const elFirst  = this.modal.querySelector(".sr-stat-first");
+    const elMonths = this.modal.querySelector(".sr-stat-months");
+    const elTotal  = this.modal.querySelector(".sr-stat-total");
+    if (elFirst)  elFirst.textContent  = "—";
+    if (elMonths) elMonths.textContent = "—";
+    if (elTotal)  elTotal.textContent  = "—";
   }
 
   /** Get the localized label for a tab/range. */
@@ -887,6 +948,35 @@ class RevolvingCalc {
    * - If the last band has "months": "final", we extend the schedule with the
    *   last step amount until the total is reached, then add the final remainder.
    */
+
+  /**
+   * Re-render the modal for a new total without reloading rules.
+   * Called by the amount input on every keystroke (debounced).
+   */
+  updateForTotal(total) {
+    if (!this.tabs || !this.tabs.length) return;
+
+    const idx = this.tabs.findIndex(
+      (t) =>
+        total >= (t.range?.min ?? -Infinity) &&
+        total <= (t.range?.max ?? Infinity),
+    );
+
+    if (idx < 0) {
+      this.renderEmpty(this.t.tooHigh);
+      return;
+    }
+
+    this.activeTabIdx   = idx;
+    this.visibleTabs    = [this.tabs[idx]];
+    this.currentTabs    = this.visibleTabs;
+
+    this.saveActiveTab(this.tabs[idx]);
+    this.updateAppliedRangeBadge(this.tabs[idx]);
+    this.renderTabs();
+    this.renderSchedule(total, 0);
+  }
+
   renderSchedule(total, tabIdx) {
     const arr =
       this.currentTabs && this.currentTabs.length
@@ -899,41 +989,67 @@ class RevolvingCalc {
     this.saveActiveTab(tab);
     this.updateAppliedRangeBadge(tab);
 
-    // Prefer new "bands"; otherwise use legacy RLE
+    // Build the repayment schedule — three formats supported (priority order):
+    //   1. sub_ranges: first_payment varies by exact total; schedule descends by payment_step to min_payment
+    //   2. bands: fixed descending sequence (legacy new format)
+    //   3. columns/RLE: original legacy format
     let schedule = [];
-    if (Array.isArray(tab.bands) && tab.bands.length) {
+    let hasFinal = false;
+    let finalStepAmount = 25;
+
+    if (Array.isArray(tab.sub_ranges) && tab.sub_ranges.length) {
+      // Find the sub-range whose [min, max] bracket contains the total
+      const subRange = tab.sub_ranges.find(
+        (sr) => total >= sr.min && total <= sr.max,
+      );
+      if (subRange) {
+        const step   = tab.payment_step || 2.5;
+        const minPay = tab.min_payment  || 25;
+        // Descending phase: first_payment → min_payment (exclusive), one month each
+        for (
+          let p = subRange.first_payment;
+          p > minPay + 0.001;
+          p = +(p - step).toFixed(2)
+        ) {
+          schedule.push(p);
+        }
+        hasFinal       = true;
+        finalStepAmount = minPay;
+      }
+    } else if (Array.isArray(tab.bands) && tab.bands.length) {
       schedule = expandBands(tab.bands);
+      hasFinal =
+        String(tab.bands[tab.bands.length - 1]?.months).toLowerCase() ===
+        "final";
+      if (hasFinal) {
+        for (let i = tab.bands.length - 2; i >= 0; i--) {
+          if (typeof tab.bands[i].months === "number") {
+            finalStepAmount = Number(tab.bands[i].amount) || 25;
+            break;
+          }
+        }
+      }
     } else if (tab.columns?.length) {
       const col = this.pickColumn(tab, total);
       schedule = expandRLE(col.rle);
     }
 
-    // If there is a "final" band, top up with last step amount until near the total
+    // Top up with min-payment months until total is reached, then add any remainder
     const sumPaid = schedule.reduce((a, b) => a + b, 0);
-    const hasFinal =
-      Array.isArray(tab.bands) &&
-      tab.bands.length &&
-      String(tab.bands[tab.bands.length - 1].months).toLowerCase() === "final";
-
     if (hasFinal && total > sumPaid) {
-      // Find the last numeric step amount (fallback 25)
-      let lastStepAmount = 25;
-      for (let i = tab.bands.length - 2; i >= 0; i--) {
-        if (typeof tab.bands[i].months === "number") {
-          lastStepAmount = Number(tab.bands[i].amount) || 25;
-          break;
-        }
-      }
-      // Push extra months until we are close to total, then add remainder if needed
       let rest = +(total - sumPaid).toFixed(2);
-      while (rest - lastStepAmount > 0.009) {
-        schedule.push(lastStepAmount);
-        rest = +(rest - lastStepAmount).toFixed(2);
+      while (rest - finalStepAmount > 0.009) {
+        schedule.push(finalStepAmount);
+        rest = +(rest - finalStepAmount).toFixed(2);
       }
       if (rest > 0.009) schedule.push(+rest.toFixed(2));
     }
 
     /* ---------------------------- UI updates ---------------------------- */
+
+    // Keep the amount input in sync (don't overwrite while user is typing)
+    const amtInput = this.modal.querySelector(".sr-amount-input");
+    if (amtInput && document.activeElement !== amtInput) amtInput.value = total;
 
     // Top teaser: "Or from X/month ..."
     const first = schedule[0] || 0;
@@ -954,6 +1070,16 @@ class RevolvingCalc {
       tr.innerHTML = `<td>${idx + 1}</td><td>${SR_FMT(this.lang, amount)} €</td>`;
       body.appendChild(tr);
     });
+
+    // Summary stats
+    const totalRepaid = schedule.reduce((a, b) => a + b, 0);
+    const numMonths   = schedule.length;
+    const elFirst  = this.modal.querySelector(".sr-stat-first");
+    const elMonths = this.modal.querySelector(".sr-stat-months");
+    const elTotal  = this.modal.querySelector(".sr-stat-total");
+    if (elFirst)  elFirst.textContent  = `${SR_FMT(this.lang, first)} €`;
+    if (elMonths) elMonths.textContent = numMonths;
+    if (elTotal)  elTotal.textContent  = `${SR_FMT(this.lang, totalRepaid)} €`;
 
     // Legal (dynamic, or legacy JSON if allowed and present)
     const legal = this.modal.querySelector(".sr-legal-dyn");
