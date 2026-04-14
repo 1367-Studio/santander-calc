@@ -231,6 +231,7 @@ class RevolvingCalc {
             `Pour une [[ouverture de crédit à durée indéterminée]] de [[${min}]] et plus avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur variable : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Montant à financer",
         statFirst:  "1ère mensualité",
         statMonths: "Nombre de mois",
         statTotal:  "Total remboursé",
@@ -261,6 +262,7 @@ class RevolvingCalc {
             `For an [[open-ended credit line]] of [[${min}]] or more with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] (variable borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Amount to finance",
         statFirst:  "First payment",
         statMonths: "Total months",
         statTotal:  "Total repaid",
@@ -292,6 +294,7 @@ class RevolvingCalc {
             `Voor een [[doorlopend krediet]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] (variabele debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
         },
         dateSep: "/",
+        amountLabel: "Te financieren bedrag",
         statFirst:  "1e betaling",
         statMonths: "Aantal maanden",
         statTotal:  "Totaal terugbetaald",
@@ -323,6 +326,7 @@ class RevolvingCalc {
             `Für eine [[unbefristete Kreditlinie]] ab [[${min}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] (variabler Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
         },
         dateSep: ".",
+        amountLabel: "Finanzierungsbetrag",
         statFirst:  "1. Monatsrate",
         statMonths: "Anzahl Monate",
         statTotal:  "Gesamt zurückgez.",
@@ -567,6 +571,13 @@ class RevolvingCalc {
             <div class="sr-tabs">
               <div class="sr-tablist" role="tablist"></div>
             </div>
+            <div class="sr-amount-wrap">
+              <label class="sr-amount-label" for="sr-amount-input">${this.t.amountLabel}</label>
+              <div class="sr-amount-field">
+                <span class="sr-amount-currency">€</span>
+                <input id="sr-amount-input" class="sr-amount-input" type="number" min="1" step="1" placeholder="0">
+              </div>
+            </div>
             <div class="sr-intro-top">
               <p class="sr-intro-head"></p>
               <p class="sr-intro-sub"></p>
@@ -605,6 +616,16 @@ class RevolvingCalc {
       m.querySelector(".sr-modal__backdrop").addEventListener("click", () => {
         m.style.display = "none";
         document.body.classList.remove("sr-open");
+      });
+
+      // Amount input — debounced live update
+      let _amtTimer;
+      m.querySelector(".sr-amount-input").addEventListener("input", (e) => {
+        clearTimeout(_amtTimer);
+        _amtTimer = setTimeout(() => {
+          const val = parseFloat(e.target.value);
+          if (!isNaN(val) && val > 0) this.updateForTotal(val);
+        }, 350);
       });
     }
     
@@ -927,6 +948,35 @@ class RevolvingCalc {
    * - If the last band has "months": "final", we extend the schedule with the
    *   last step amount until the total is reached, then add the final remainder.
    */
+
+  /**
+   * Re-render the modal for a new total without reloading rules.
+   * Called by the amount input on every keystroke (debounced).
+   */
+  updateForTotal(total) {
+    if (!this.tabs || !this.tabs.length) return;
+
+    const idx = this.tabs.findIndex(
+      (t) =>
+        total >= (t.range?.min ?? -Infinity) &&
+        total <= (t.range?.max ?? Infinity),
+    );
+
+    if (idx < 0) {
+      this.renderEmpty(this.t.tooHigh);
+      return;
+    }
+
+    this.activeTabIdx   = idx;
+    this.visibleTabs    = [this.tabs[idx]];
+    this.currentTabs    = this.visibleTabs;
+
+    this.saveActiveTab(this.tabs[idx]);
+    this.updateAppliedRangeBadge(this.tabs[idx]);
+    this.renderTabs();
+    this.renderSchedule(total, 0);
+  }
+
   renderSchedule(total, tabIdx) {
     const arr =
       this.currentTabs && this.currentTabs.length
@@ -996,6 +1046,10 @@ class RevolvingCalc {
     }
 
     /* ---------------------------- UI updates ---------------------------- */
+
+    // Keep the amount input in sync (don't overwrite while user is typing)
+    const amtInput = this.modal.querySelector(".sr-amount-input");
+    if (amtInput && document.activeElement !== amtInput) amtInput.value = total;
 
     // Top teaser: "Or from X/month ..."
     const first = schedule[0] || 0;

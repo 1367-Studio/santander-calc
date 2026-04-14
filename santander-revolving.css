@@ -193,6 +193,68 @@ body.sr-open { overflow: hidden; }
   border-color: var(--sr-primary);
 }
 
+/* ── Amount input ────────────────────────────────────────────── */
+.sr-amount-wrap {
+  margin-bottom: 18px;
+}
+
+.sr-amount-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--sr-text-muted);
+  margin-bottom: 7px;
+}
+
+.sr-amount-field {
+  display: flex;
+  align-items: stretch;
+  background: var(--sr-surface);
+  border: 1.5px solid var(--sr-border);
+  border-radius: var(--sr-radius-md);
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.sr-amount-field:focus-within {
+  border-color: var(--sr-primary);
+  box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.08);
+}
+
+.sr-amount-currency {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--sr-text-sub);
+  background: #f0f0f2;
+  border-right: 1.5px solid var(--sr-border);
+  flex-shrink: 0;
+}
+
+.sr-amount-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 11px 14px;
+  font-family: var(--sr-font);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--sr-text);
+  outline: none;
+  min-width: 0;
+  letter-spacing: -0.02em;
+  -moz-appearance: textfield;
+}
+
+.sr-amount-input::-webkit-inner-spin-button,
+.sr-amount-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
 /* ── Applied-range pill ──────────────────────────────────────── */
 .sr-applied-range {
   display: inline-flex;
