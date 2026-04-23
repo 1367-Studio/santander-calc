@@ -727,6 +727,7 @@ class RevolvingCalc {
           },
           bands: rule.bands || [],
           sub_ranges: rule.sub_ranges || null,
+          monthly_rate: rule.monthly_rate || 0.0128,
           payment_step: rule.payment_step || 2.5,
           min_payment: rule.min_payment || 25,
           /**
@@ -998,23 +999,17 @@ class RevolvingCalc {
     let finalStepAmount = 25;
 
     if (Array.isArray(tab.sub_ranges) && tab.sub_ranges.length) {
-      // Find the sub-range whose [min, max] bracket contains the total
-      const subRange = tab.sub_ranges.find(
-        (sr) => total >= sr.min && total <= sr.max,
-      );
-      if (subRange) {
-        const step   = tab.payment_step || 2.5;
-        const minPay = tab.min_payment  || 25;
-        // Descending phase: first_payment → min_payment (exclusive), one month each
-        for (
-          let p = subRange.first_payment;
-          p > minPay + 0.001;
-          p = +(p - step).toFixed(2)
-        ) {
-          schedule.push(p);
-        }
-        hasFinal       = true;
-        finalStepAmount = minPay;
+      const rate   = tab.monthly_rate || 0.0128;
+      const minPay = tab.min_payment  || 25;
+      let balance  = total;
+      while (balance > 0.009) {
+        let sr = tab.sub_ranges.find((r) => balance >= r.min && balance <= r.max);
+        if (!sr) sr = [...tab.sub_ranges].reverse().find((r) => balance > r.max);
+        const payment = sr ? sr.first_payment : minPay;
+        balance       = +(balance * (1 + rate)).toFixed(10);
+        const p       = +Math.min(payment, balance).toFixed(2);
+        schedule.push(p);
+        balance = +(balance - p).toFixed(10);
       }
     } else if (Array.isArray(tab.bands) && tab.bands.length) {
       schedule = expandBands(tab.bands);
