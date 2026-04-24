@@ -1003,8 +1003,9 @@ class RevolvingCalc {
       const minPay = tab.min_payment  || 25;
       let balance  = total;
       while (balance > 0.009) {
-        let sr = tab.sub_ranges.find((r) => balance >= r.min && balance <= r.max);
-        if (!sr) sr = [...tab.sub_ranges].reverse().find((r) => balance > r.max);
+        const lookup = Math.round(balance);
+        let sr = tab.sub_ranges.find((r) => lookup >= r.min && lookup <= r.max);
+        if (!sr) sr = [...tab.sub_ranges].reverse().find((r) => lookup > r.max);
         const payment = sr ? sr.first_payment : minPay;
         balance       = +(balance * (1 + rate)).toFixed(10);
         const p       = +Math.min(payment, balance).toFixed(2);

@@ -7,7 +7,7 @@
   "apr_nominal": 0.1215,
   "apr_representative": 0.1349,
   "open_fee_monthly": 0.001,
-  "monthly_rate": 0.0106,
+  "monthly_rate": 0.010601176913182186,
   "bands": [
     {
       "months": 1,
