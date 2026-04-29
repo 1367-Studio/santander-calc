@@ -8,7 +8,8 @@
   var bg       = script.dataset.bg       || '#ffffff';
   var headerBg = script.dataset.headerBg || primary;
   var headerFg = script.dataset.headerFg || '#ffffff';
-  var width    = script.dataset.width    || 'auto';
+  var width     = script.dataset.width    || 'auto';
+  var autoopen  = script.dataset.autoopen === 'true';
 
   var labels = {
     fr: "Voir l'échéancier",
@@ -37,14 +38,29 @@
     'box-sizing: border-box',
   ].join('; ');
 
-  // Insert right where the <script> tag is
-  script.parentNode.insertBefore(btn, script.nextSibling);
+  // Insert right where the <script> tag is (hidden if autoopen — no button needed)
+  if (!autoopen) {
+    script.parentNode.insertBefore(btn, script.nextSibling);
+  }
 
-  // ── Modal iframe (created on demand) ──────────────────────────────────────
-  var iframe = null;
+  // ── Modal iframe + parent-level backdrop ───────────────────────────────────
+  var iframe  = null;
+  var backdrop = null;
 
   function openModal() {
     if (iframe) return;
+
+    btn.style.visibility = 'hidden';
+
+    // Backdrop lives in the parent document so backdrop-filter works in Chrome
+    backdrop = document.createElement('div');
+    backdrop.style.cssText = [
+      'position: fixed',
+      'inset: 0',
+      'background: rgba(8, 8, 20, 0.6)',
+      'z-index: 2147483646',
+    ].join('; ');
+    document.body.appendChild(backdrop);
 
     var params = new URLSearchParams();
     params.set('total',     total);
@@ -54,6 +70,7 @@
     params.set('headerBg',  headerBg);
     params.set('headerFg',  headerFg);
     params.set('autoopen',  'true');
+    params.set('noBackdrop', 'true');
 
     iframe = document.createElement('iframe');
     iframe.src               = BASE_URL + '?' + params.toString();
@@ -79,7 +96,9 @@
     if (!iframe) return;
     window.removeEventListener('message', onMessage);
     document.body.removeChild(iframe);
+    if (backdrop) { document.body.removeChild(backdrop); backdrop = null; }
     iframe = null;
+    btn.style.visibility = '';
   }
 
   function onMessage(e) {
@@ -89,4 +108,6 @@
   }
 
   btn.addEventListener('click', openModal);
+
+  if (autoopen) openModal();
 })();
