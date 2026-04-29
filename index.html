@@ -18,9 +18,14 @@
 </head>
 <body>
   <script>
-    const p        = new URLSearchParams(location.search);
-    const autoopen = p.get('autoopen') === 'true';
-    const lang     = p.get('lang') || 'fr';
+    const p          = new URLSearchParams(location.search);
+    const autoopen   = p.get('autoopen') === 'true';
+    const noBackdrop = p.get('noBackdrop') === 'true';
+    const lang       = p.get('lang') || 'fr';
+
+    if (noBackdrop) {
+      document.documentElement.style.setProperty('--sr-backdrop-display', 'none');
+    }
 
     const labels = {
       fr: "Voir l'échéancier",
@@ -35,9 +40,15 @@
     root.dataset.useI18nLegal   = 'true';
     root.dataset.total          = p.get('total')    || '0';
     root.dataset.language       = lang;
-    root.dataset.primaryColor   = p.get('primary')  || '#e60000';
+    let primary = p.get('primary') || '#e60000';
+    if (primary && !primary.startsWith('#') && primary.length >= 3) primary = '#' + primary;
+    
+    let headerBg = p.get('headerBg') || primary;
+    if (headerBg && !headerBg.startsWith('#') && headerBg.length >= 3) headerBg = '#' + headerBg;
+
+    root.dataset.primaryColor   = primary;
     root.dataset.bgColor        = p.get('bg')       || '#ffffff';
-    root.dataset.headerBg       = p.get('headerBg') || p.get('primary') || '#e60000';
+    root.dataset.headerBg       = headerBg;
     root.dataset.headerFg       = p.get('headerFg') || '#ffffff';
     root.dataset.revolvingFileA = 'revolving_bands_1250.json';
     root.dataset.revolvingFileB = 'revolving_bands_1250_5000.json';

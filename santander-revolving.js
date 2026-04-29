@@ -224,17 +224,20 @@ class RevolvingCalc {
         tabC: "≥ 5 001 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
-            `Pour une [[ouverture de crédit à durée indéterminée]] de [[${amount}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur variable : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
+            `Pour une [[ouverture de crédit à durée indéterminée]] de [[${amount}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
+          upTo: ({ max, aprRep, aprNom, feeMonthly, date }) =>
+            `Pour une [[ouverture de crédit à durée indéterminée]] jusqu'à [[${max}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
           between: ({ min, max, aprRep, aprNom, feeMonthly, date }) =>
-            `Pour une [[ouverture de crédit à durée indéterminée]] entre [[${min}]] et [[${max}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur variable : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
+            `Pour une [[ouverture de crédit à durée indéterminée]] entre [[${min}]] et [[${max}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
           min: ({ min, aprRep, aprNom, feeMonthly, date }) =>
-            `Pour une [[ouverture de crédit à durée indéterminée]] de [[${min}]] et plus avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur variable : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
+            `Pour une [[ouverture de crédit à durée indéterminée]] de [[${min}]] et plus avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
         },
         dateSep: "/",
         amountLabel: "Montant à financer",
         statFirst:  "1ère mensualité",
         statMonths: "Nombre de mois",
         statTotal:  "Total remboursé",
+        roundingNote: "Sous réserve d'erreurs d'arrondi.",
       },
 
       en: {
@@ -255,17 +258,20 @@ class RevolvingCalc {
         tabC: "≥ €5,001",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
-            `For an [[open-ended credit line]] of [[${amount}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] (variable borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
+            `For an [[open-ended credit line]] of [[${amount}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
+          upTo: ({ max, aprRep, aprNom, feeMonthly, date }) =>
+            `For an [[open-ended credit line]] up to [[${max}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
           between: ({ min, max, aprRep, aprNom, feeMonthly, date }) =>
-            `For an [[open-ended credit line]] between [[${min}]] and [[${max}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] (variable borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
+            `For an [[open-ended credit line]] between [[${min}]] and [[${max}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
           min: ({ min, aprRep, aprNom, feeMonthly, date }) =>
-            `For an [[open-ended credit line]] of [[${min}]] or more with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] (variable borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
+            `For an [[open-ended credit line]] of [[${min}]] or more with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
         },
         dateSep: "/",
         amountLabel: "Amount to finance",
         statFirst:  "First payment",
         statMonths: "Total months",
         statTotal:  "Total repaid",
+        roundingNote: "Figures are subject to rounding errors.",
       },
 
       nl: {
@@ -287,17 +293,20 @@ class RevolvingCalc {
         tabC: "≥ €5.001",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] (variabele debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[doorlopend krediet]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+          upTo: ({ max, aprRep, aprNom, feeMonthly, date }) =>
+            `Voor een [[doorlopend krediet]] tot [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
           between: ({ min, max, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] tussen [[${min}]] en [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] (variabele debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[doorlopend krediet]] tussen [[${min}]] en [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
           min: ({ min, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] (variabele debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[doorlopend krediet]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
         },
         dateSep: "/",
         amountLabel: "Te financieren bedrag",
         statFirst:  "1e betaling",
         statMonths: "Aantal maanden",
         statTotal:  "Totaal terugbetaald",
+        roundingNote: "Afrondingsverschillen voorbehouden.",
       },
 
       de: {
@@ -319,17 +328,20 @@ class RevolvingCalc {
         tabC: "≥ 5.001 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
-            `Für eine [[unbefristete Kreditlinie]] von [[${amount}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] (variabler Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
+            `Für eine [[unbefristete Kreditlinie]] von [[${amount}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
+          upTo: ({ max, aprRep, aprNom, feeMonthly, date }) =>
+            `Für eine [[unbefristete Kreditlinie]] bis zu [[${max}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
           between: ({ min, max, aprRep, aprNom, feeMonthly, date }) =>
-            `Für eine [[unbefristete Kreditlinie]] zwischen [[${min}]] und [[${max}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] (variabler Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
+            `Für eine [[unbefristete Kreditlinie]] zwischen [[${min}]] und [[${max}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
           min: ({ min, aprRep, aprNom, feeMonthly, date }) =>
-            `Für eine [[unbefristete Kreditlinie]] ab [[${min}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] (variabler Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
+            `Für eine [[unbefristete Kreditlinie]] ab [[${min}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
         },
         dateSep: ".",
         amountLabel: "Finanzierungsbetrag",
         statFirst:  "1. Monatsrate",
         statMonths: "Anzahl Monate",
         statTotal:  "Gesamt zurückgez.",
+        roundingNote: "Angaben können Rundungsfehler enthalten.",
       },
     };
     return d[l] || d.fr;
@@ -558,9 +570,6 @@ class RevolvingCalc {
         <div class="sr-modal__backdrop"></div>
         <div class="sr-modal__content sr-content--tall">
           <div class="header-banner">
-            <svg class="banner-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/>
-            </svg>
             <span class="banner-text">${this.t.headerBanner}</span>
           </div>
           <div class="sr-modal__header">
@@ -603,6 +612,7 @@ class RevolvingCalc {
                 <tbody class="sr-schedule-body"></tbody>
               </table>
             </div>
+            <p class="sr-rounding-note sr-legal--small"></p>
             <p class="sr-date-stamp"></p>
             <div class="sr-legal sr-legal--small sr-legal-dyn"></div>
           </div>
@@ -645,11 +655,6 @@ class RevolvingCalc {
    */
   async open() {
     const total = await this.getCartTotal();
-    if (!total || total <= 0) {
-      this.renderEmpty(this.t.emptyCart);
-      this.show();
-      return;
-    }
 
     try {
       if (!this.rules) {
@@ -659,6 +664,12 @@ class RevolvingCalc {
     } catch (e) {
       console.error("[Revolving] rules load error:", e);
       this.renderEmpty("Indisponible pour l’instant.");
+      this.show();
+      return;
+    }
+
+    if (!total || total <= 0) {
+      this.renderEmpty(this.t.emptyCart);
       this.show();
       return;
     }
@@ -727,6 +738,7 @@ class RevolvingCalc {
           },
           bands: rule.bands || [],
           sub_ranges: rule.sub_ranges || null,
+          monthly_rate: rule.monthly_rate || 0.0128,
           payment_step: rule.payment_step || 2.5,
           min_payment: rule.min_payment || 25,
           /**
@@ -906,10 +918,15 @@ class RevolvingCalc {
 
     const tpl = this.t.legalTpl;
 
-    // both bounds present (min & max): "between"
+    // both bounds present (min & max): "upTo" when min is 0, otherwise "between"
     if (Number.isFinite(range.min) && Number.isFinite(range.max)) {
-      const minStr = this.formatIntCurrency(range.min);
       const maxStr = this.formatIntCurrency(range.max);
+      if (range.min === 0 && tpl.upTo) {
+        return formatLegalText(
+          tpl.upTo({ max: maxStr, aprRep, aprNom, feeMonthly, date }),
+        );
+      }
+      const minStr = this.formatIntCurrency(range.min);
       return formatLegalText(
         tpl.between({
           min: minStr,
@@ -998,23 +1015,18 @@ class RevolvingCalc {
     let finalStepAmount = 25;
 
     if (Array.isArray(tab.sub_ranges) && tab.sub_ranges.length) {
-      // Find the sub-range whose [min, max] bracket contains the total
-      const subRange = tab.sub_ranges.find(
-        (sr) => total >= sr.min && total <= sr.max,
-      );
-      if (subRange) {
-        const step   = tab.payment_step || 2.5;
-        const minPay = tab.min_payment  || 25;
-        // Descending phase: first_payment → min_payment (exclusive), one month each
-        for (
-          let p = subRange.first_payment;
-          p > minPay + 0.001;
-          p = +(p - step).toFixed(2)
-        ) {
-          schedule.push(p);
-        }
-        hasFinal       = true;
-        finalStepAmount = minPay;
+      const rate   = tab.monthly_rate || 0.0128;
+      const minPay = tab.min_payment  || 25;
+      let balance  = total;
+      while (balance > 0.009) {
+        const lookup = Math.round(balance);
+        let sr = tab.sub_ranges.find((r) => lookup >= r.min && lookup <= r.max);
+        if (!sr) sr = [...tab.sub_ranges].reverse().find((r) => lookup > r.max);
+        const payment = sr ? sr.first_payment : minPay;
+        balance       = +(balance * (1 + rate)).toFixed(10);
+        const p       = +Math.min(payment, balance).toFixed(2);
+        schedule.push(p);
+        balance = +(balance - p).toFixed(10);
       }
     } else if (Array.isArray(tab.bands) && tab.bands.length) {
       schedule = expandBands(tab.bands);
@@ -1086,6 +1098,9 @@ class RevolvingCalc {
     const legalHtml = this.buildLegalFromTab(tab);
     legal.innerHTML = legalHtml ? `<p>${legalHtml}</p>` : "";
 
+    const roundingEl = this.modal.querySelector(".sr-rounding-note");
+    if (roundingEl) roundingEl.textContent = this.t.roundingNote || "";
+
     // Keep the existing dd/mm/yyyy stamp for backward compatibility
     const d = new Date();
     const dd = String(d.getDate()).padStart(2, "0");
@@ -1109,7 +1124,9 @@ class RevolvingCalc {
     const dataTotal = parseFloat(this.root.dataset.total);
     if (!isNaN(dataTotal) && dataTotal > 0) return dataTotal;
 
-    // Shopify mode: read from /cart.js
+    // Shopify mode: read from /cart.js (only in actual Shopify environment)
+    if (!window.Shopify) return 0;
+
     try {
       const r = await fetch("/cart.js", { cache: "no-store" });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
