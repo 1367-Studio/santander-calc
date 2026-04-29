@@ -28,27 +28,36 @@ Drop the `<script>` tag wherever you want the button to appear:
 |---|---|---|
 | `data-total` | Total amount in euros | `0` |
 | `data-lang` | Language: `fr` `en` `nl` `de` | `fr` |
-| `data-primary` | Primary hex color | `#e60000` |
-| `data-bg` | Modal background color (hex) | `#ffffff` |
-| `data-header-bg` | Modal header background (hex) | same as primary |
-| `data-header-fg` | Modal header text color (hex) | `#ffffff` |
+| `data-primary` | Primary hex color (without `#`) | `e60000` |
+| `data-bg` | Modal background color (without `#`) | `ffffff` |
+| `data-header-bg` | Modal header background (without `#`) | same as primary |
+| `data-header-fg` | Modal header text color (without `#`) | `ffffff` |
 | `data-btn-text` | Custom button label (overrides auto-translation) | auto-translated |
 | `data-width` | Button width | `auto` |
-| `data-height` | Button height | `50px` |
+| `data-autoopen` | Open modal automatically on page load, no button rendered | `false` |
 
 ### Full example
 
 ```html
+<!-- With button (product page) -->
 <script
   src="https://cdn.jsdelivr.net/npm/santander-calc/loader.js"
   data-total="2500"
   data-lang="fr"
-  data-primary="#e60000"
-  data-bg="#ffffff"
-  data-header-bg="#e60000"
-  data-header-fg="#ffffff"
+  data-primary="e60000"
+  data-bg="ffffff"
+  data-header-bg="e60000"
+  data-header-fg="ffffff"
   data-btn-text="Voir l'échéancier"
   data-width="100%">
+</script>
+
+<!-- Auto-open (dedicated calculator page — no button) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/santander-calc/loader.js"
+  data-lang="fr"
+  data-primary="e60000"
+  data-autoopen="true">
 </script>
 ```
 
