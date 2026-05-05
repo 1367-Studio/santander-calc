@@ -155,13 +155,13 @@ class RevolvingCalc {
     const assetsBase = routesRoot ? `${routesRoot}assets/` : "/assets/";
     this.files = {
       A:
-        root.dataset.revolvingFileA || `${assetsBase}revolving_bands_1250.json`,
+        root.dataset.revolvingFileA || `${assetsBase}revolving_bands_0_1250.json`,
       B:
         root.dataset.revolvingFileB ||
-        `${assetsBase}revolving_bands_1250_5000.json`,
+        `${assetsBase}revolving_bands_0_2500.json`,
       C:
         root.dataset.revolvingFileC ||
-        `${assetsBase}revolving_bands_5000_plus.json`,
+        `${assetsBase}revolving_bands_0_5001.json`,
     };
 
     this.renderInline = root.dataset.renderInline === "true";
@@ -170,6 +170,11 @@ class RevolvingCalc {
 
     /** i18n dictionary (labels + legal templates) */
     this.t = this.i18n(this.lang);
+
+    /** Credit limit tier selected by the user (0=≤1250, 1=≤2500, 2=≤5001+) */
+    this.selectedCreditLimitIdx = 0;
+    /** Upper bound (inclusive) for each credit limit tier */
+    this.creditLimitThresholds = [1250, 2500, Infinity];
 
     /* ------------------------- Boot sequence ----------------------------- */
     this.applyThemeVars();
@@ -220,8 +225,8 @@ class RevolvingCalc {
           "Votre panier est vide. Ajoutez des articles pour voir un échéancier.",
         tooHigh: "Montant supérieur au plafond configuré.",
         tabA: "≤ 1 250 €",
-        tabB: "1 250–5 000 €",
-        tabC: "≥ 5 001 €",
+        tabB: "≤ 2 500 €",
+        tabC: "≤ 5 001 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Pour une [[ouverture de crédit à durée indéterminée]] de [[${amount}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
@@ -238,6 +243,11 @@ class RevolvingCalc {
         statMonths: "Nombre de mois",
         statTotal:  "Total remboursé",
         roundingNote: "Sous réserve d'erreurs d'arrondi.",
+        creditLimitLabel: "Limite de crédit",
+        creditLimitA: "≤ 1 250 €",
+        creditLimitB: "≤ 2 500 €",
+        creditLimitC: "≤ 5 001 €",
+        creditLimitChanged: (label) => `Tranche modifiée automatiquement → ${label}`,
       },
 
       en: {
@@ -254,8 +264,8 @@ class RevolvingCalc {
         emptyCart: "Your cart is empty. Add items to see a schedule.",
         tooHigh: "Amount above the configured ceiling.",
         tabA: "≤ €1,250",
-        tabB: "€1,250–€5,000",
-        tabC: "≥ €5,001",
+        tabB: "≤ €2,500",
+        tabC: "≤ €5,001",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `For an [[open-ended credit line]] of [[${amount}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
@@ -272,6 +282,11 @@ class RevolvingCalc {
         statMonths: "Total months",
         statTotal:  "Total repaid",
         roundingNote: "Figures are subject to rounding errors.",
+        creditLimitLabel: "Credit limit",
+        creditLimitA: "≤ €1,250",
+        creditLimitB: "≤ €2,500",
+        creditLimitC: "≤ €5,001",
+        creditLimitChanged: (label) => `Range auto-adjusted → ${label}`,
       },
 
       nl: {
@@ -289,8 +304,8 @@ class RevolvingCalc {
           "Uw winkelwagen is leeg. Voeg items toe om een schema te zien.",
         tooHigh: "Bedrag boven de ingestelde limiet.",
         tabA: "≤ €1.250",
-        tabB: "€1.250–€5.000",
-        tabC: "≥ €5.001",
+        tabB: "≤ €2.500",
+        tabC: "≤ €5.001",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Voor een [[doorlopend krediet]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
@@ -307,6 +322,11 @@ class RevolvingCalc {
         statMonths: "Aantal maanden",
         statTotal:  "Totaal terugbetaald",
         roundingNote: "Afrondingsverschillen voorbehouden.",
+        creditLimitLabel: "Kredietlimiet",
+        creditLimitA: "≤ €1.250",
+        creditLimitB: "≤ €2.500",
+        creditLimitC: "≤ €5.001",
+        creditLimitChanged: (label) => `Schijf automatisch aangepast → ${label}`,
       },
 
       de: {
@@ -324,8 +344,8 @@ class RevolvingCalc {
           "Ihr Warenkorb ist leer. Fügen Sie Artikel hinzu, um einen Plan zu sehen.",
         tooHigh: "Betrag über dem konfigurierten Limit.",
         tabA: "≤ 1.250 €",
-        tabB: "1.250–5.000 €",
-        tabC: "≥ 5.001 €",
+        tabB: "≤ 2.500 €",
+        tabC: "≤ 5.001 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Für eine [[unbefristete Kreditlinie]] von [[${amount}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
@@ -342,6 +362,11 @@ class RevolvingCalc {
         statMonths: "Anzahl Monate",
         statTotal:  "Gesamt zurückgez.",
         roundingNote: "Angaben können Rundungsfehler enthalten.",
+        creditLimitLabel: "Kreditlimit",
+        creditLimitA: "≤ 1.250 €",
+        creditLimitB: "≤ 2.500 €",
+        creditLimitC: "≤ 5.001 €",
+        creditLimitChanged: (label) => `Tranche automatisch angepasst → ${label}`,
       },
     };
     return d[l] || d.fr;
@@ -580,6 +605,15 @@ class RevolvingCalc {
             <div class="sr-tabs">
               <div class="sr-tablist" role="tablist"></div>
             </div>
+            <div class="sr-credit-limit-wrap">
+              <span class="sr-amount-label">${this.t.creditLimitLabel}</span>
+              <div class="sr-credit-limit-options" role="group" aria-label="${this.t.creditLimitLabel}">
+                <button type="button" class="sr-limit-btn is-active" data-limit-idx="0">${this.t.creditLimitA}</button>
+                <button type="button" class="sr-limit-btn" data-limit-idx="1">${this.t.creditLimitB}</button>
+                <button type="button" class="sr-limit-btn" data-limit-idx="2">${this.t.creditLimitC}</button>
+              </div>
+              <div class="sr-limit-feedback" hidden></div>
+            </div>
             <div class="sr-amount-wrap">
               <label class="sr-amount-label" for="sr-amount-input">${this.t.amountLabel}</label>
               <div class="sr-amount-field">
@@ -637,6 +671,27 @@ class RevolvingCalc {
           if (!isNaN(val) && val > 0) this.updateForTotal(val);
         }, 350);
       });
+
+      // Credit limit buttons — switch tier and re-render
+      m.querySelectorAll(".sr-limit-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = parseInt(btn.dataset.limitIdx, 10);
+          this.selectedCreditLimitIdx = idx;
+          this.updateCreditLimitSelector();
+          const amtInput = this.modal.querySelector(".sr-amount-input");
+          const val = parseFloat(amtInput?.value);
+          if (!isNaN(val) && val > 0 && this.tabs?.length) {
+            const tabIdx = Math.min(idx, this.tabs.length - 1);
+            this.activeTabIdx = tabIdx;
+            this.visibleTabs  = [this.tabs[tabIdx]];
+            this.currentTabs  = this.visibleTabs;
+            this.saveActiveTab(this.tabs[tabIdx]);
+            this.updateAppliedRangeBadge(this.tabs[tabIdx]);
+            this.renderTabs();
+            this.renderSchedule(val, 0);
+          }
+        });
+      });
     }
     
     this.modal = m;
@@ -669,35 +724,28 @@ class RevolvingCalc {
     }
 
     if (!total || total <= 0) {
+      this.updateCreditLimitSelector();
       this.renderEmpty(this.t.emptyCart);
       this.show();
       return;
     }
 
-    // Find the range/tab including this total
-    this.activeTabIdx = this.tabs.findIndex(
-      (t) =>
-        total >= (t.range?.min ?? -Infinity) &&
-        total <= (t.range?.max ?? Infinity),
-    );
+    // Determine credit limit tier from total and sync selector
+    this.selectedCreditLimitIdx = this.creditLimitThresholds.findIndex((t) => total <= t);
+    if (this.selectedCreditLimitIdx < 0) this.selectedCreditLimitIdx = this.creditLimitThresholds.length - 1;
+    this.updateCreditLimitSelector();
 
-    if (this.activeTabIdx < 0) {
-      this.renderEmpty(this.t.tooHigh);
-      this.show();
-      return;
-    }
+    const tabIdx = Math.min(this.selectedCreditLimitIdx, this.tabs.length - 1);
+    this.activeTabIdx = tabIdx;
+    this.visibleTabs  = [this.tabs[tabIdx]];
+    this.currentTabs  = this.visibleTabs;
 
-    // Only display the matching tab
-    this.visibleTabs = [this.tabs[this.activeTabIdx]];
-    this.currentTabs = this.visibleTabs.length ? this.visibleTabs : this.tabs;
-
-    // Save and badge the selected range
-    const selectedTab = this.tabs[this.activeTabIdx];
+    const selectedTab = this.tabs[tabIdx];
     this.saveActiveTab(selectedTab);
     this.updateAppliedRangeBadge(selectedTab);
 
-    this.renderTabs(); // hides tab bar if only one tab
-    this.renderSchedule(total, 0); // we only show index 0 of the visible set
+    this.renderTabs();
+    this.renderSchedule(total, 0);
     this.show();
   }
 
@@ -973,25 +1021,47 @@ class RevolvingCalc {
   updateForTotal(total) {
     if (!this.tabs || !this.tabs.length) return;
 
-    const idx = this.tabs.findIndex(
-      (t) =>
-        total >= (t.range?.min ?? -Infinity) &&
-        total <= (t.range?.max ?? Infinity),
-    );
-
-    if (idx < 0) {
-      this.renderEmpty(this.t.tooHigh);
-      return;
+    // Auto-correct credit limit tier if amount exceeds the selected ceiling
+    const thresholds = this.creditLimitThresholds;
+    let newLimitIdx = this.selectedCreditLimitIdx;
+    while (newLimitIdx < thresholds.length - 1 && total > thresholds[newLimitIdx]) {
+      newLimitIdx++;
+    }
+    if (newLimitIdx !== this.selectedCreditLimitIdx) {
+      this.selectedCreditLimitIdx = newLimitIdx;
+      this.updateCreditLimitSelector();
+      this.showCreditLimitFeedback();
     }
 
-    this.activeTabIdx   = idx;
-    this.visibleTabs    = [this.tabs[idx]];
-    this.currentTabs    = this.visibleTabs;
+    const idx = Math.min(this.selectedCreditLimitIdx, this.tabs.length - 1);
+    this.activeTabIdx = idx;
+    this.visibleTabs  = [this.tabs[idx]];
+    this.currentTabs  = this.visibleTabs;
 
     this.saveActiveTab(this.tabs[idx]);
     this.updateAppliedRangeBadge(this.tabs[idx]);
     this.renderTabs();
     this.renderSchedule(total, 0);
+  }
+
+  updateCreditLimitSelector() {
+    if (!this.modal) return;
+    this.modal.querySelectorAll(".sr-limit-btn").forEach((btn, i) => {
+      btn.classList.toggle("is-active", i === this.selectedCreditLimitIdx);
+    });
+  }
+
+  showCreditLimitFeedback() {
+    const el = this.modal?.querySelector(".sr-limit-feedback");
+    if (!el) return;
+    const labels = [this.t.creditLimitA, this.t.creditLimitB, this.t.creditLimitC];
+    el.textContent = this.t.creditLimitChanged(labels[this.selectedCreditLimitIdx]);
+    // restart animation
+    el.setAttribute("hidden", "");
+    void el.offsetWidth;
+    el.removeAttribute("hidden");
+    clearTimeout(this._feedbackTimer);
+    this._feedbackTimer = setTimeout(() => el.setAttribute("hidden", ""), 4000);
   }
 
   renderSchedule(total, tabIdx) {
@@ -1019,9 +1089,16 @@ class RevolvingCalc {
       const minPay = tab.min_payment  || 25;
       let balance  = total;
       while (balance > 0.009) {
-        const lookup = Math.round(balance);
-        let sr = tab.sub_ranges.find((r) => lookup >= r.min && lookup <= r.max);
-        if (!sr) sr = [...tab.sub_ranges].reverse().find((r) => lookup > r.max);
+        let sr = tab.sub_ranges.find((r) => {
+          const minCmp = r.min % 1 !== 0 ? balance >= r.min : Math.round(balance) >= r.min;
+          const maxCmp = r.max % 1 !== 0 ? balance <= r.max : Math.round(balance) <= r.max;
+          return minCmp && maxCmp;
+        });
+        if (!sr) {
+          sr = [...tab.sub_ranges].reverse().find((r) => {
+            return r.max % 1 !== 0 ? balance > r.max : Math.round(balance) > r.max;
+          });
+        }
         const payment = sr ? sr.first_payment : minPay;
         balance       = +(balance * (1 + rate)).toFixed(10);
         const p       = +Math.min(payment, balance).toFixed(2);

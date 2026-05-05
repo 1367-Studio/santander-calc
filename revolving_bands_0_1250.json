@@ -1,0 +1,113 @@
+{
+  "id": "A",
+  "range": {
+    "min": 0,
+    "max": 1250
+  },
+  "apr_nominal": 0.1512,
+  "apr_representative": 0.1649,
+  "open_fee_monthly": 0.001,
+  "monthly_rate": 0.012800842103907195,
+  "payment_step": 2.5,
+  "min_payment": 25,
+  "sub_ranges": [
+    {
+      "min": 0,
+      "max": 441.7,
+      "first_payment": 25
+    },
+    {
+      "min": 441.71,
+      "max": 485.8,
+      "first_payment": 27.5
+    },
+    {
+      "min": 485.81,
+      "max": 533.7,
+      "first_payment": 30
+    },
+    {
+      "min": 533.71,
+      "max": 576.32,
+      "first_payment": 32.5
+    },
+    {
+      "min": 576.33,
+      "max": 623.96,
+      "first_payment": 35
+    },
+    {
+      "min": 623.97,
+      "max": 666.35,
+      "first_payment": 37.5
+    },
+    {
+      "min": 666.36,
+      "max": 706.52,
+      "first_payment": 40
+    },
+    {
+      "min": 706.53,
+      "max": 751.78,
+      "first_payment": 42.5
+    },
+    {
+      "min": 751.79,
+      "max": 799.66,
+      "first_payment": 45
+    },
+    {
+      "min": 799.67,
+      "max": 847.55,
+      "first_payment": 47.5
+    },
+    {
+      "min": 847.56,
+      "max": 887.44,
+      "first_payment": 50
+    },
+    {
+      "min": 887.45,
+      "max": 933.8,
+      "first_payment": 52.5
+    },
+    {
+      "min": 933.81,
+      "max": 977.53,
+      "first_payment": 55
+    },
+    {
+      "min": 977.54,
+      "max": 1023.18,
+      "first_payment": 57.5
+    },
+    {
+      "min": 1023.19,
+      "max": 1070.73,
+      "first_payment": 60
+    },
+    {
+      "min": 1070.74,
+      "max": 1120.14,
+      "first_payment": 62.5
+    },
+    {
+      "min": 1120.15,
+      "max": 1167.39,
+      "first_payment": 65
+    },
+    {
+      "min": 1167.4,
+      "max": 1221.75,
+      "first_payment": 67.5
+    },
+    {
+      "min": 1221.76,
+      "max": 1250,
+      "first_payment": 72.5
+    }
+  ],
+  "legal_lines": [
+    "Pour [[une ouverture de crédit à durée indéterminée]] de 1250 € avec un [[Taux Annuel Effectif Global (TAEG)]] de 16,49% (le taux débiteur [[variable]] de 15,12% et les frais de carte 0,10% par mois du capital restant dû). Taux valable à 27/05/2025."
+  ]
+}
