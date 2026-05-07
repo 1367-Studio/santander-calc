@@ -1,0 +1,358 @@
+{
+  "id": "B",
+  "range": {
+    "min": 1251,
+    "max": 5000
+  },
+  "apr_nominal": 0.1215,
+  "apr_representative": 0.1349,
+  "open_fee_monthly": 0.001,
+  "monthly_rate": 0.010601176913182186,
+  "payment_step": 2.5,
+  "min_payment": 25,
+  "sub_ranges": [
+    {
+      "min": 0,
+      "max": 595.19,
+      "first_payment": 25
+    },
+    {
+      "min": 595.2,
+      "max": 652.58,
+      "first_payment": 27.5
+    },
+    {
+      "min": 652.59,
+      "max": 712.73,
+      "first_payment": 30
+    },
+    {
+      "min": 712.74,
+      "max": 771.57,
+      "first_payment": 32.5
+    },
+    {
+      "min": 771.58,
+      "max": 830.8,
+      "first_payment": 35
+    },
+    {
+      "min": 830.81,
+      "max": 894.14,
+      "first_payment": 37.5
+    },
+    {
+      "min": 894.15,
+      "max": 950.51,
+      "first_payment": 40
+    },
+    {
+      "min": 950.52,
+      "max": 1008.82,
+      "first_payment": 42.5
+    },
+    {
+      "min": 1008.83,
+      "max": 1070.92,
+      "first_payment": 45
+    },
+    {
+      "min": 1070.93,
+      "max": 1131.33,
+      "first_payment": 47.5
+    },
+    {
+      "min": 1131.34,
+      "max": 1187.65,
+      "first_payment": 50
+    },
+    {
+      "min": 1187.66,
+      "max": 1249.13,
+      "first_payment": 52.5
+    },
+    {
+      "min": 1249.14,
+      "max": 1306.24,
+      "first_payment": 55
+    },
+    {
+      "min": 1306.25,
+      "max": 1364.53,
+      "first_payment": 57.5
+    },
+    {
+      "min": 1364.54,
+      "max": 1425.33,
+      "first_payment": 60
+    },
+    {
+      "min": 1425.34,
+      "max": 1489.82,
+      "first_payment": 62.5
+    },
+    {
+      "min": 1489.83,
+      "max": 1539.75,
+      "first_payment": 65
+    },
+    {
+      "min": 1539.76,
+      "max": 1603.22,
+      "first_payment": 67.5
+    },
+    {
+      "min": 1603.23,
+      "max": 1661.17,
+      "first_payment": 70
+    },
+    {
+      "min": 1661.18,
+      "max": 1719.98,
+      "first_payment": 72.5
+    },
+    {
+      "min": 1719.99,
+      "max": 1780.95,
+      "first_payment": 75
+    },
+    {
+      "min": 1780.96,
+      "max": 1843.19,
+      "first_payment": 77.5
+    },
+    {
+      "min": 1843.2,
+      "max": 1900.06,
+      "first_payment": 80
+    },
+    {
+      "min": 1900.07,
+      "max": 1959.38,
+      "first_payment": 82.5
+    },
+    {
+      "min": 1959.39,
+      "max": 2017.96,
+      "first_payment": 85
+    },
+    {
+      "min": 2017.97,
+      "max": 2076.31,
+      "first_payment": 87.5
+    },
+    {
+      "min": 2076.32,
+      "max": 2137.93,
+      "first_payment": 90
+    },
+    {
+      "min": 2137.94,
+      "max": 2202.84,
+      "first_payment": 92.5
+    },
+    {
+      "min": 2202.85,
+      "max": 2256.06,
+      "first_payment": 95
+    },
+    {
+      "min": 2256.07,
+      "max": 2318.09,
+      "first_payment": 97.5
+    },
+    {
+      "min": 2318.1,
+      "max": 2373.81,
+      "first_payment": 100
+    },
+    {
+      "min": 2373.82,
+      "max": 2429.28,
+      "first_payment": 102.5
+    },
+    {
+      "min": 2429.29,
+      "max": 2484.42,
+      "first_payment": 105
+    },
+    {
+      "min": 2484.43,
+      "max": 2565.97,
+      "first_payment": 107.5
+    },
+    {
+      "min": 2565.98,
+      "max": 2609.13,
+      "first_payment": 110
+    },
+    {
+      "min": 2609.14,
+      "max": 2677.38,
+      "first_payment": 112.5
+    },
+    {
+      "min": 2677.39,
+      "max": 2737.6,
+      "first_payment": 115
+    },
+    {
+      "min": 2737.61,
+      "max": 2791.08,
+      "first_payment": 117.5
+    },
+    {
+      "min": 2791.09,
+      "max": 2856.53,
+      "first_payment": 120
+    },
+    {
+      "min": 2856.54,
+      "max": 2920.41,
+      "first_payment": 122.5
+    },
+    {
+      "min": 2920.42,
+      "max": 2970.37,
+      "first_payment": 125
+    },
+    {
+      "min": 2970.38,
+      "max": 3017.18,
+      "first_payment": 127.5
+    },
+    {
+      "min": 3017.19,
+      "max": 3090.19,
+      "first_payment": 130
+    },
+    {
+      "min": 3090.2,
+      "max": 3148.31,
+      "first_payment": 132.5
+    },
+    {
+      "min": 3148.32,
+      "max": 3218.4,
+      "first_payment": 135
+    },
+    {
+      "min": 3218.41,
+      "max": 3252.58,
+      "first_payment": 137.5
+    },
+    {
+      "min": 3252.59,
+      "max": 3316.85,
+      "first_payment": 140
+    },
+    {
+      "min": 3316.86,
+      "max": 3382.43,
+      "first_payment": 142.5
+    },
+    {
+      "min": 3382.44,
+      "max": 3426.77,
+      "first_payment": 145
+    },
+    {
+      "min": 3426.78,
+      "max": 3494.14,
+      "first_payment": 147.5
+    },
+    {
+      "min": 3494.15,
+      "max": 3540.49,
+      "first_payment": 150
+    },
+    {
+      "min": 3540.5,
+      "max": 3620.09,
+      "first_payment": 152.5
+    },
+    {
+      "min": 3620.1,
+      "max": 3657.96,
+      "first_payment": 155
+    },
+    {
+      "min": 3657.97,
+      "max": 3743.85,
+      "first_payment": 157.5
+    },
+    {
+      "min": 3743.86,
+      "max": 3779.14,
+      "first_payment": 160
+    },
+    {
+      "min": 3779.15,
+      "max": 3835.3,
+      "first_payment": 162.5
+    },
+    {
+      "min": 3835.31,
+      "max": 3904.01,
+      "first_payment": 165
+    },
+    {
+      "min": 3904.02,
+      "max": 3962.05,
+      "first_payment": 167.5
+    },
+    {
+      "min": 3962.06,
+      "max": 4032.51,
+      "first_payment": 170
+    },
+    {
+      "min": 4032.52,
+      "max": 4092.41,
+      "first_payment": 172.5
+    },
+    {
+      "min": 4092.42,
+      "max": 4161.14,
+      "first_payment": 175
+    },
+    {
+      "min": 4161.15,
+      "max": 4226.36,
+      "first_payment": 177.5
+    },
+    {
+      "min": 4226.37,
+      "max": 4326.38,
+      "first_payment": 180
+    },
+    {
+      "min": 4326.39,
+      "max": 4469,
+      "first_payment": 187.5
+    },
+    {
+      "min": 4469.01,
+      "max": 4612.91,
+      "first_payment": 192.5
+    },
+    {
+      "min": 4612.92,
+      "max": 4763.66,
+      "first_payment": 197.5
+    },
+    {
+      "min": 4763.67,
+      "max": 4920.25,
+      "first_payment": 205
+    },
+    {
+      "min": 4920.26,
+      "max": 5001,
+      "first_payment": 212.5
+    }
+  ],
+  "legal_lines": [
+    "Pour une [[ouverture de crédit à durée indéterminée]] de 5 001 € avec un [[Taux Annuel Effectif Global (TAEG)]] de 13,49% (le taux débiteur [[variable]] de 12,15% et les frais de carte 0,10% par mois du capital restant dû). Taux valable à 27/05/2025."
+  ]
+}

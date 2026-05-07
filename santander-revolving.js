@@ -158,10 +158,7 @@ class RevolvingCalc {
         root.dataset.revolvingFileA || `${assetsBase}revolving_bands_0_1250.json`,
       B:
         root.dataset.revolvingFileB ||
-        `${assetsBase}revolving_bands_0_2500.json`,
-      C:
-        root.dataset.revolvingFileC ||
-        `${assetsBase}revolving_bands_0_5001.json`,
+        `${assetsBase}revolving_bands_1251_5000.json`,
     };
 
     this.renderInline = root.dataset.renderInline === "true";
@@ -171,10 +168,10 @@ class RevolvingCalc {
     /** i18n dictionary (labels + legal templates) */
     this.t = this.i18n(this.lang);
 
-    /** Credit limit tier selected by the user (0=≤1250, 1=≤2500, 2=≤5001+) */
+    /** Credit limit tier selected by the user (0=≤1250, 1=1251-5000) */
     this.selectedCreditLimitIdx = 0;
     /** Upper bound (inclusive) for each credit limit tier */
-    this.creditLimitThresholds = [1250, 2500, Infinity];
+    this.creditLimitThresholds = [1250, 5000];
 
     /* ------------------------- Boot sequence ----------------------------- */
     this.applyThemeVars();
@@ -213,7 +210,7 @@ class RevolvingCalc {
         headerBanner:
           "Attention, emprunter de l’argent coûte aussi de l’argent.",
         appliedRange: (label) => `Tranche appliquée : ${label}`,
-        scheduleTitle: "Crédit renouvelable",
+        scheduleTitle: "Ouverture de crédit",
         colMonths: "Mois",
         colToRepay: "Somme",
         dateLabel: "Date de ce calcul",
@@ -225,8 +222,7 @@ class RevolvingCalc {
           "Votre panier est vide. Ajoutez des articles pour voir un échéancier.",
         tooHigh: "Montant supérieur au plafond configuré.",
         tabA: "≤ 1 250 €",
-        tabB: "≤ 2 500 €",
-        tabC: "≤ 5 001 €",
+        tabB: "1 251 € - 5 000 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Pour une [[ouverture de crédit à durée indéterminée]] de [[${amount}]] avec un [[Taux Annuel Effectif Global (TAEG)]] de [[${aprRep}%]] (taux débiteur [[variable]] : ${aprNom}% et frais de carte ${feeMonthly}% par mois du capital restant dû). Taux valable au ${date}.`,
@@ -245,8 +241,7 @@ class RevolvingCalc {
         roundingNote: "Sous réserve d'erreurs d'arrondi.",
         creditLimitLabel: "Limite de crédit",
         creditLimitA: "≤ 1 250 €",
-        creditLimitB: "≤ 2 500 €",
-        creditLimitC: "≤ 5 001 €",
+        creditLimitB: "1 251 € - 5 000 €",
         creditLimitChanged: (label) => `Tranche modifiée automatiquement → ${label}`,
       },
 
@@ -264,8 +259,7 @@ class RevolvingCalc {
         emptyCart: "Your cart is empty. Add items to see a schedule.",
         tooHigh: "Amount above the configured ceiling.",
         tabA: "≤ €1,250",
-        tabB: "≤ €2,500",
-        tabC: "≤ €5,001",
+        tabB: "€1,251 - €5,000",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `For an [[open-ended credit line]] of [[${amount}]] with an [[Annual Percentage Rate (APR)]] of [[${aprRep}%]] ([[variable]] borrowing rate: ${aprNom}% and card fee ${feeMonthly}% per month on the outstanding balance). Rate valid on ${date}.`,
@@ -284,8 +278,7 @@ class RevolvingCalc {
         roundingNote: "Figures are subject to rounding errors.",
         creditLimitLabel: "Credit limit",
         creditLimitA: "≤ €1,250",
-        creditLimitB: "≤ €2,500",
-        creditLimitC: "≤ €5,001",
+        creditLimitB: "€1,251 - €5,000",
         creditLimitChanged: (label) => `Range auto-adjusted → ${label}`,
       },
 
@@ -304,8 +297,7 @@ class RevolvingCalc {
           "Uw winkelwagen is leeg. Voeg items toe om een schema te zien.",
         tooHigh: "Bedrag boven de ingestelde limiet.",
         tabA: "≤ €1.250",
-        tabB: "≤ €2.500",
-        tabC: "≤ €5.001",
+        tabB: "€1.251 - €5.000",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Voor een [[doorlopend krediet]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
@@ -324,8 +316,7 @@ class RevolvingCalc {
         roundingNote: "Afrondingsverschillen voorbehouden.",
         creditLimitLabel: "Kredietlimiet",
         creditLimitA: "≤ €1.250",
-        creditLimitB: "≤ €2.500",
-        creditLimitC: "≤ €5.001",
+        creditLimitB: "€1.251 - €5.000",
         creditLimitChanged: (label) => `Schijf automatisch aangepast → ${label}`,
       },
 
@@ -344,8 +335,7 @@ class RevolvingCalc {
           "Ihr Warenkorb ist leer. Fügen Sie Artikel hinzu, um einen Plan zu sehen.",
         tooHigh: "Betrag über dem konfigurierten Limit.",
         tabA: "≤ 1.250 €",
-        tabB: "≤ 2.500 €",
-        tabC: "≤ 5.001 €",
+        tabB: "1.251 € - 5.000 €",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
             `Für eine [[unbefristete Kreditlinie]] von [[${amount}]] mit einem [[effektiven Jahreszins (APR)]] von [[${aprRep}%]] ([[variabler]] Sollzinssatz: ${aprNom}% und Kartenentgelt ${feeMonthly}% pro Monat auf den offenen Saldo). Zinssatz gültig am ${date}.`,
@@ -364,8 +354,7 @@ class RevolvingCalc {
         roundingNote: "Angaben können Rundungsfehler enthalten.",
         creditLimitLabel: "Kreditlimit",
         creditLimitA: "≤ 1.250 €",
-        creditLimitB: "≤ 2.500 €",
-        creditLimitC: "≤ 5.001 €",
+        creditLimitB: "1.251 € - 5.000 €",
         creditLimitChanged: (label) => `Tranche automatisch angepasst → ${label}`,
       },
     };
@@ -610,7 +599,6 @@ class RevolvingCalc {
               <div class="sr-credit-limit-options" role="group" aria-label="${this.t.creditLimitLabel}">
                 <button type="button" class="sr-limit-btn is-active" data-limit-idx="0">${this.t.creditLimitA}</button>
                 <button type="button" class="sr-limit-btn" data-limit-idx="1">${this.t.creditLimitB}</button>
-                <button type="button" class="sr-limit-btn" data-limit-idx="2">${this.t.creditLimitC}</button>
               </div>
               <div class="sr-limit-feedback" hidden></div>
             </div>
@@ -634,10 +622,6 @@ class RevolvingCalc {
               <div class="sr-stat">
                 <div class="sr-stat__label">${this.t.statMonths}</div>
                 <div class="sr-stat__value sr-stat-months">—</div>
-              </div>
-              <div class="sr-stat">
-                <div class="sr-stat__label">${this.t.statTotal}</div>
-                <div class="sr-stat__value sr-stat-total">—</div>
               </div>
             </div>
             <div class="sr-table-wrap">
@@ -754,7 +738,7 @@ class RevolvingCalc {
    * them into our internal "tabs" shape. If none load, fall back to legacy file.
    */
   async loadNewRulesOrLegacy() {
-    const urls = [this.files.A, this.files.B, this.files.C];
+    const urls = [this.files.A, this.files.B].filter(Boolean);
     const results = await Promise.allSettled(
       urls.map((u) => fetch(u, { cache: "no-store" })),
     );
@@ -772,17 +756,17 @@ class RevolvingCalc {
       // Normalize to a { tabs } object
       const tabs = okResponses
         .map((rule, idx) => ({
-          id: rule.id || ["A", "B", "C"][idx] || `T${idx + 1}`,
+          id: rule.id || ["A", "B"][idx] || `T${idx + 1}`,
           range: rule.range || {
             min: rule.min ?? 0,
             max: rule.max ?? Infinity,
           },
           // Per-language label for the range (fallback to A/B/C if unknown)
           label: {
-            fr: [this.t.tabA, this.t.tabB, this.t.tabC][idx] || this.t.tabA,
-            en: [this.t.tabA, this.t.tabB, this.t.tabC][idx] || this.t.tabA,
-            nl: [this.t.tabA, this.t.tabB, this.t.tabC][idx] || this.t.tabA,
-            de: [this.t.tabA, this.t.tabB, this.t.tabC][idx] || this.t.tabA,
+            fr: [this.t.tabA, this.t.tabB][idx] || this.t.tabA,
+            en: [this.t.tabA, this.t.tabB][idx] || this.t.tabA,
+            nl: [this.t.tabA, this.t.tabB][idx] || this.t.tabA,
+            de: [this.t.tabA, this.t.tabB][idx] || this.t.tabA,
           },
           bands: rule.bands || [],
           sub_ranges: rule.sub_ranges || null,
@@ -850,10 +834,8 @@ class RevolvingCalc {
     if (pill) pill.hidden = true;
     const elFirst  = this.modal.querySelector(".sr-stat-first");
     const elMonths = this.modal.querySelector(".sr-stat-months");
-    const elTotal  = this.modal.querySelector(".sr-stat-total");
     if (elFirst)  elFirst.textContent  = "—";
     if (elMonths) elMonths.textContent = "—";
-    if (elTotal)  elTotal.textContent  = "—";
   }
 
   /** Get the localized label for a tab/range. */
@@ -862,7 +844,7 @@ class RevolvingCalc {
     const lbl = tab.label?.[this.lang];
     if (lbl) return lbl;
     const idx = this.tabs.indexOf(tab);
-    return idx === 0 ? this.t.tabA : idx === 1 ? this.t.tabB : this.t.tabC;
+    return idx === 0 ? this.t.tabA : this.t.tabB;
   }
 
   /** Save active tab info (for CSS/telemetry) and localStorage. */
@@ -886,8 +868,7 @@ class RevolvingCalc {
     const pill = this.modal.querySelector(".sr-applied-range");
     if (!pill) return;
     const label = this.getTabLabel(tab);
-    pill.textContent = this.t.appliedRange(label);
-    pill.hidden = !label;
+    pill.hidden = true;
   }
 
   /**
@@ -915,7 +896,7 @@ class RevolvingCalc {
       btn.className = "sr-tab" + (i === 0 ? " is-active" : "");
       const label =
         tab.label?.[this.lang] ??
-        (i === 0 ? this.t.tabA : i === 1 ? this.t.tabB : this.t.tabC);
+        (i === 0 ? this.t.tabA : this.t.tabB);
       btn.textContent = label;
       btn.addEventListener("click", () => {
         this.modal
@@ -1054,7 +1035,7 @@ class RevolvingCalc {
   showCreditLimitFeedback() {
     const el = this.modal?.querySelector(".sr-limit-feedback");
     if (!el) return;
-    const labels = [this.t.creditLimitA, this.t.creditLimitB, this.t.creditLimitC];
+    const labels = [this.t.creditLimitA, this.t.creditLimitB];
     el.textContent = this.t.creditLimitChanged(labels[this.selectedCreditLimitIdx]);
     // restart animation
     el.setAttribute("hidden", "");
@@ -1146,10 +1127,7 @@ class RevolvingCalc {
       `${SR_FMT(this.lang, first)}€`,
     );
 
-    // Sub header: "budget overview for a single registration of €TOTAL"
-    this.modal.querySelector(".sr-intro-sub").textContent = this.t.overview(
-      SR_FMT(this.lang, total),
-    );
+    this.modal.querySelector(".sr-intro-sub").textContent = "";
 
     // Table rows
     const body = this.modal.querySelector(".sr-schedule-body");
@@ -1161,14 +1139,11 @@ class RevolvingCalc {
     });
 
     // Summary stats
-    const totalRepaid = schedule.reduce((a, b) => a + b, 0);
     const numMonths   = schedule.length;
     const elFirst  = this.modal.querySelector(".sr-stat-first");
     const elMonths = this.modal.querySelector(".sr-stat-months");
-    const elTotal  = this.modal.querySelector(".sr-stat-total");
     if (elFirst)  elFirst.textContent  = `${SR_FMT(this.lang, first)} €`;
     if (elMonths) elMonths.textContent = numMonths;
-    if (elTotal)  elTotal.textContent  = `${SR_FMT(this.lang, totalRepaid)} €`;
 
     // Legal (dynamic, or legacy JSON if allowed and present)
     const legal = this.modal.querySelector(".sr-legal-dyn");

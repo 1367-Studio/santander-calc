@@ -14,8 +14,8 @@
   --sr-surface:       #f7f7f9;
   --sr-border:        #ebebee;
   --sr-text:          #111318;
-  --sr-text-sub:      #6b7280;
-  --sr-text-muted:    #b0b7c3;
+  --sr-text-sub:      #4b5563;
+  --sr-text-muted:    #7a8799;
 
 --sr-radius-xl:     22px;
   --sr-radius-lg:     14px;
@@ -84,8 +84,8 @@ body.sr-open { overflow: hidden; }
 
 /* ── Warning banner ──────────────────────────────────────────── */
 .header-banner {
-  background: #fffbeb;
-  border-bottom: 1px solid #fde68a;
+  background: #000000;
+  border-bottom: none;
   padding: 8px 22px;
   display: flex;
   align-items: center;
@@ -102,9 +102,9 @@ body.sr-open { overflow: hidden; }
 
 .banner-text {
   font-family: var(--sr-font);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  color: #92400e;
+  color: #ffffff;
   line-height: 1.5;
   letter-spacing: 0.01em;
 }
@@ -351,7 +351,7 @@ body.sr-open { overflow: hidden; }
 /* ── Stats cards ─────────────────────────────────────────────── */
 .sr-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-bottom: 20px;
   position: relative;
@@ -475,7 +475,7 @@ body.sr-open { overflow: hidden; }
 }
 
 .sr-table tbody tr:hover td { background: var(--sr-surface); }
-.sr-table tbody tr:first-child:hover td { background: #fff0f0; }
+.sr-table tbody tr:first-child:hover td { background: color-mix(in srgb, var(--sr-primary) 8%, white); }
 
 /* ── Date stamp ──────────────────────────────────────────────── */
 .sr-date-stamp {
