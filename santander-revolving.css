@@ -124,7 +124,7 @@ body.sr-open { overflow: hidden; }
 
 .sr-modal__header h3 {
   font-family: var(--sr-font);
-  color: #fff;
+  color: var(--sr-header-fg);
   margin: 0;
   font-size: 1.05rem;
   font-weight: 800;
