@@ -46,10 +46,13 @@
     let headerBg = p.get('headerBg') || primary;
     if (headerBg && !headerBg.startsWith('#') && headerBg.length >= 3) headerBg = '#' + headerBg;
 
+    let headerFg = p.get('headerFg') || '#ffffff';
+    if (headerFg && !headerFg.startsWith('#') && headerFg.length >= 3) headerFg = '#' + headerFg;
+
     root.dataset.primaryColor   = primary;
     root.dataset.bgColor        = p.get('bg')       || '#ffffff';
     root.dataset.headerBg       = headerBg;
-    root.dataset.headerFg       = p.get('headerFg') || '#ffffff';
+    root.dataset.headerFg       = headerFg;
     root.dataset.revolvingFileA = 'revolving_bands_0_1250.json';
     root.dataset.revolvingFileB = 'revolving_bands_1251_5000.json';
 
