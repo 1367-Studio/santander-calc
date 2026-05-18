@@ -285,7 +285,7 @@ class RevolvingCalc {
       nl: {
         headerBanner: "Let op, geld lenen kost ook geld.",
         appliedRange: (label) => `Toegepaste schijf: ${label}`,
-        scheduleTitle: "Doorlopend krediet",
+        scheduleTitle: "Kredietopening van onbepaalde duur",
         colMonths: "Maanden",
         colToRepay: "Bedrag",
         dateLabel: "Datum van deze berekening",
@@ -300,13 +300,13 @@ class RevolvingCalc {
         tabB: "€1.251 - €5.000",
         legalTpl: {
           single: ({ amount, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[kredietopening van onbepaalde duur]] van [[${amount}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
           upTo: ({ max, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] tot [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[kredietopening van onbepaalde duur]] tot en met [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
           between: ({ min, max, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] tussen [[${min}]] en [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[kredietopening van onbepaalde duur]] tussen [[${min}]] en [[${max}]] met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
           min: ({ min, aprRep, aprNom, feeMonthly, date }) =>
-            `Voor een [[doorlopend krediet]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
+            `Voor een [[kredietopening van onbepaalde duur]] van [[${min}]] of meer met een [[Jaarlijks Kostenpercentage (JKP)]] van [[${aprRep}%]] ([[variabele]] debetrente ${aprNom}% en kaartkosten ${feeMonthly}% per maand op het openstaand saldo). Tarief geldig op ${date}.`,
         },
         dateSep: "/",
         amountLabel: "Te financieren bedrag",
