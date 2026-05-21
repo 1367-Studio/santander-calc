@@ -285,7 +285,7 @@ class RevolvingCalc {
       nl: {
         headerBanner: "Let op, geld lenen kost ook geld.",
         appliedRange: (label) => `Toegepaste schijf: ${label}`,
-        scheduleTitle: "Kredietopening van onbepaalde duur",
+        scheduleTitle: "Kredietopening",
         colMonths: "Maanden",
         colToRepay: "Bedrag",
         dateLabel: "Datum van deze berekening",
