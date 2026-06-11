@@ -544,3 +544,37 @@ body.sr-open { overflow: hidden; }
   .sr-table td,
   .sr-table thead th { padding: 7px 12px; }
 }
+
+/* ── Embedded / inline mode (data-embed="true") ──────────────── */
+body.sr-embedded { overflow: visible; }
+
+body.sr-embedded .sr-modal {
+  position: static;
+  padding: 0;
+  z-index: auto;
+  animation: none;
+}
+
+body.sr-embedded .sr-modal[style*="flex"] { animation: none; }
+
+body.sr-embedded .sr-modal__backdrop { display: none; }
+
+body.sr-embedded .sr-modal__content {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+body.sr-embedded .sr-modal[style*="flex"] .sr-modal__content { animation: none; }
+
+body.sr-embedded .sr-modal__close { display: none; }
+
+body.sr-embedded .sr-modal__body {
+  overflow: visible;
+  max-height: none;
+}

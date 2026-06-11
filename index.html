@@ -21,10 +21,16 @@
     const p          = new URLSearchParams(location.search);
     const autoopen   = p.get('autoopen') === 'true';
     const noBackdrop = p.get('noBackdrop') === 'true';
+    const embed      = p.get('embed')      === 'true';
     const lang       = p.get('lang') || 'fr';
 
     if (noBackdrop) {
       document.documentElement.style.setProperty('--sr-backdrop-display', 'none');
+    }
+
+    if (embed) {
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
     }
 
     const labels = {
@@ -56,9 +62,11 @@
     root.dataset.revolvingFileA = 'revolving_bands_0_1250.json';
     root.dataset.revolvingFileB = 'revolving_bands_1251_5000.json';
 
-    // In autoopen mode the iframe is modal-only — don't render the button at all
+    if (embed) root.dataset.embed = 'true';
+
+    // In autoopen/embed mode the iframe is modal-only — don't render the button at all
     // so installInlineButton() finds nothing and skips
-    if (!autoopen) {
+    if (!autoopen && !embed) {
       const btn = document.createElement('button');
       btn.id          = 'santander-revolving-btn-inline';
       btn.type        = 'button';
@@ -75,7 +83,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var modal    = document.getElementById('santander-revolving-modal');
-      var autoopen = new URLSearchParams(location.search).get('autoopen') === 'true';
+      var _p       = new URLSearchParams(location.search);
+      var autoopen = _p.get('autoopen') === 'true';
+      var embed    = _p.get('embed')    === 'true';
 
       // Wire close buttons to notify parent (loader.js or React component)
       if (modal) {
@@ -89,8 +99,8 @@
           });
       }
 
-      // Auto-open the modal directly
-      if (autoopen) {
+      // Auto-open: modal (autoopen) or embedded inline (embed)
+      if (autoopen || embed) {
         var root = document.getElementById('santander-revolving-root-1');
         if (root && root.__sr_instance) {
           root.__sr_instance.open();
