@@ -35,6 +35,7 @@ Drop the `<script>` tag wherever you want the button to appear:
 | `data-btn-text` | Custom button label (overrides auto-translation) | auto-translated |
 | `data-width` | Button width | `auto` |
 | `data-autoopen` | Open modal automatically on page load, no button rendered | `false` |
+| `data-embed` | Render the schedule directly in the page — no button, no popup | `false` |
 
 ### Full example
 
@@ -58,6 +59,16 @@ Drop the `<script>` tag wherever you want the button to appear:
   data-lang="fr"
   data-primary="e60000"
   data-autoopen="true">
+</script>
+
+<!-- Embed (inline in page — no button, no popup, content always visible) -->
+<script
+  src="https://cdn.jsdelivr.net/npm/santander-calc/loader.js"
+  data-total="1500"
+  data-lang="fr"
+  data-primary="e60000"
+  data-embed="true"
+  data-width="100%">
 </script>
 ```
 
@@ -119,6 +130,8 @@ export default function CartPage() {
 | `btnText` | `string` | Custom button label | auto-translated |
 | `className` | `string` | CSS class on the button | — |
 | `style` | `object` | Inline styles on the button | — |
+| `embed` | `boolean` | Render inline in page — no button, no popup | `false` |
+| `width` | `string` | Width of the embed iframe | `"100%"` |
 
 > **Button label** — The button text is automatically translated based on `lang`:
 > `fr` → "Voir l'échéancier" · `en` → "See schedule" · `nl` → "Schema bekijken" · `de` → "Plan anzeigen"

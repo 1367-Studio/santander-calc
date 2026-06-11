@@ -1,6 +1,6 @@
 (function () {
   var script   = document.currentScript;
-  var BASE_URL = 'https://1367-studio.github.io/santander-calc/';
+  var BASE_URL = script.dataset.baseUrl || 'https://1367-studio.github.io/santander-calc/';
 
   var lang     = script.dataset.lang     || 'fr';
   var total    = script.dataset.total    || '0';
@@ -10,6 +10,7 @@
   var headerFg = script.dataset.headerFg || '#ffffff';
   var width     = script.dataset.width    || 'auto';
   var autoopen  = script.dataset.autoopen === 'true';
+  var embed     = script.dataset.embed    === 'true';
 
   var labels = {
     fr: "Voir l'échéancier",
@@ -18,6 +19,41 @@
     de: 'Plan anzeigen',
   };
   var btnText = script.dataset.btnText || labels[lang] || labels.fr;
+
+  // ── Embed mode: inline iframe, no button, no modal popup ──────────────────
+  if (embed) {
+    var eParams = new URLSearchParams();
+    eParams.set('total',    total);
+    eParams.set('lang',     lang);
+    eParams.set('primary',  primary.replace('#', ''));
+    eParams.set('bg',       bg.replace('#', ''));
+    eParams.set('headerBg', headerBg.replace('#', ''));
+    eParams.set('headerFg', headerFg.replace('#', ''));
+    eParams.set('embed',    'true');
+
+    var eFrame = document.createElement('iframe');
+    eFrame.src               = BASE_URL + '?' + eParams.toString();
+    eFrame.allowTransparency = true;
+    eFrame.setAttribute('allowtransparency', 'true');
+    eFrame.setAttribute('frameborder', '0');
+    eFrame.style.cssText = [
+      'display: block',
+      'width: ' + width,
+      'height: 560px',
+      'border: none',
+      'background: transparent',
+    ].join('; ');
+
+    script.parentNode.insertBefore(eFrame, script.nextSibling);
+
+    window.addEventListener('message', function (e) {
+      if (e.source === eFrame.contentWindow && e.data && e.data.type === 'sr:height') {
+        eFrame.style.height = e.data.height + 'px';
+      }
+    });
+
+    return; // no button, no modal machinery
+  }
 
   // ── Inline button ──────────────────────────────────────────────────────────
   var btn = document.createElement('button');

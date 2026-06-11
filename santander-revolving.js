@@ -164,6 +164,7 @@ class RevolvingCalc {
     this.renderInline = root.dataset.renderInline === "true";
     this.fullWidthButton = root.dataset.fullWidthButton === "true";
     this.cartEmbed = root.dataset.cartEmbed === "true";
+    this.embed = root.dataset.embed === "true";
 
     /** i18n dictionary (labels + legal templates) */
     this.t = this.i18n(this.lang);
@@ -175,22 +176,28 @@ class RevolvingCalc {
 
     /* ------------------------- Boot sequence ----------------------------- */
     this.applyThemeVars();
-    
+
+    // Embed mode: content rendered inline in page — open() called by index.html
+    if (this.embed) {
+      this.createModal();
+      return;
+    }
+
     // If cart embed is enabled, only install cart button
     if (this.cartEmbed) {
       this.installCartButton();
     }
-    
+
     // If inline rendering is enabled, only install inline button
     if (this.renderInline) {
       this.installInlineButton();
     }
-    
+
     // If neither is explicitly set, install cart button (backward compatibility)
     if (!this.cartEmbed && !this.renderInline) {
       this.installCartButton();
     }
-    
+
     this.createModal();
   }
 
@@ -809,6 +816,27 @@ class RevolvingCalc {
 
   show() {
     this.modal.style.display = "flex";
+    if (this.embed) {
+      document.body.classList.add("sr-embedded");
+      // ResizeObserver keeps the iframe height in sync on every re-render
+      if (!this._resizeObserver) {
+        this._resizeObserver = new ResizeObserver(() => {
+          window.parent.postMessage(
+            { type: "sr:height", height: this.modal.offsetHeight },
+            "*",
+          );
+        });
+        this._resizeObserver.observe(this.modal);
+      }
+      // Initial report after first paint
+      setTimeout(() => {
+        window.parent.postMessage(
+          { type: "sr:height", height: this.modal.offsetHeight },
+          "*",
+        );
+      }, 80);
+      return;
+    }
     document.body.classList.add("sr-open");
   }
 

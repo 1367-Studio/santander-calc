@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, createElement } from "react";
+import { useState, useEffect, useRef, createElement } from "react";
 
 const BASE_URL = "https://1367-studio.github.io/santander-calc/";
 
@@ -21,8 +21,12 @@ export function SantanderCalcButton({
   btnText,
   className,
   style,
+  embed = false,
+  width = "100%",
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen]     = useState(false);
+  const [embedHeight, setEmbedHeight] = useState(560);
+  const frameRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -33,6 +37,51 @@ export function SantanderCalcButton({
     return () => window.removeEventListener("message", handleMessage);
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!embed) return;
+    const handleMessage = (e) => {
+      if (
+        frameRef.current &&
+        e.source === frameRef.current.contentWindow &&
+        e.data?.type === "sr:height"
+      ) {
+        setEmbedHeight(e.data.height);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [embed]);
+
+  const cleanColor = (c) => (c || "").replace("#", "");
+
+  // ── Embed mode: inline iframe, always visible ──────────────────────────────
+  if (embed) {
+    const params = new URLSearchParams({
+      total:    String(total),
+      lang,
+      primary:  cleanColor(primary),
+      bg:       cleanColor(bg),
+      headerBg: cleanColor(headerBg || primary),
+      headerFg: cleanColor(headerFg),
+      embed:    "true",
+    });
+
+    return createElement("iframe", {
+      ref:              frameRef,
+      src:              `${BASE_URL}?${params}`,
+      allowTransparency: true,
+      style: {
+        display:    "block",
+        width,
+        height:     embedHeight + "px",
+        border:     "none",
+        background: "transparent",
+        ...style,
+      },
+    });
+  }
+
+  // ── Button + modal mode (default) ──────────────────────────────────────────
   const params = new URLSearchParams({
     total:    String(total),
     lang,
