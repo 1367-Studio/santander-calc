@@ -14,6 +14,13 @@
   ],
   "keywords": ["santander", "revolving", "credit", "calculator", "widget"],
   "license": "UNLICENSED",
+  "scripts": {
+    "sync:sanity": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --target=prod",
+    "sync:sanity:dry-run": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --dry-run --target=prod",
+    "sync:sanity:dev": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --target=dev",
+    "sync:sanity:dev:dry-run": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --dry-run --target=dev",
+    "seed:sanity": "node --env-file=.env scripts/seed-sanity.mjs"
+  },
   "peerDependencies": {
     "react": ">=17",
     "react-dom": ">=17"
@@ -21,6 +28,9 @@
   "peerDependenciesMeta": {
     "react": { "optional": true },
     "react-dom": { "optional": true }
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.24.1"
   },
   "publishConfig": {
     "access": "public"
