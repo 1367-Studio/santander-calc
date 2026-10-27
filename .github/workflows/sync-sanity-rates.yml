@@ -71,4 +71,21 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add revolving_bands_*.json
           git commit -m "chore: sync rates from Sanity [skip ci]"
-          git push
+          # Two Sanity edits published close together can dispatch two runs of
+          # this workflow almost simultaneously; concurrency only serializes
+          # them once GitHub schedules them, which isn't tight enough to rule
+          # out a push race. Rebase-and-retry instead of failing outright —
+          # safe here because every run recomputes the same deterministic
+          # output from Sanity's current state, so replaying on top of
+          # another run's commit never conflicts.
+          for i in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $i/5) — another run landed first, rebasing and retrying..."
+            git fetch origin main
+            git rebase origin/main
+            sleep $(( (RANDOM % 5) + 1 ))
+          done
+          echo "::error::Failed to push after 5 attempts"
+          exit 1
