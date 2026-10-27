@@ -5,9 +5,9 @@
     "max": 1250
   },
   "apr_nominal": 0.1512,
-  "apr_representative": 0.1649,
+  "apr_representative": 0.2,
   "open_fee_monthly": 0.001,
-  "monthly_rate": 0.012800842103907195,
+  "monthly_rate": 0.015309470499731193,
   "payment_step": 2.5,
   "min_payment": 25,
   "sub_ranges": [
