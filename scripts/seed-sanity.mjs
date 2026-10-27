@@ -31,7 +31,7 @@ const BANDS = [
   {
     fileKey: '1251_5000',
     fileName: 'revolving_bands_1251_5000.json',
-    label: 'Band B (duplicate) — €1,251 to €5,000',
+    label: 'Band C2 — split half, €1,251 to €5,000 (used together with Band A for the €5,000 limit product)',
   },
 ]
 
