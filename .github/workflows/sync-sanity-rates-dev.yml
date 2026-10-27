@@ -1,0 +1,73 @@
+name: Sync rates from Sanity (dev)
+
+# Writes into dev/revolving_bands_*.json instead of the real (root) ones —
+# an isolated mirror served at https://1367-studio.github.io/santander-calc/dev/
+# Production files at the repo root are never touched by this workflow.
+#
+# Includes EVERY revolvingRateBand doc (unlike the prod workflow, which skips
+# anything flagged publishToDevOnly) so the dev mirror always shows a
+# complete, working calculator — real values for untouched bands, test
+# values for whichever band currently has "Test mode" checked in Sanity.
+#
+# Triggered by a Sanity webhook filtered on publishToDevOnly == true, calling
+# the same GitHub dispatches endpoint as the prod workflow but with
+# event_type "sanity-rate-sync-dev" (see README for the exact webhook config).
+# Also runnable by hand: Actions tab -> "Sync rates from Sanity (dev)" -> Run workflow.
+on:
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: [sanity-rate-sync-dev]
+
+concurrency:
+  group: sync-sanity-rates-dev
+  cancel-in-progress: false
+
+jobs:
+  sync-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync rates from Sanity (dev mirror — all bands, incl. publishToDevOnly)
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_READ_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+        run: node scripts/sync-rates-from-sanity.mjs --target=dev
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- dev/revolving_bands_*.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show diff
+        if: steps.diff.outputs.changed == 'true'
+        run: git diff -- dev/revolving_bands_*.json
+
+      - name: Commit and push (GitHub Pages redeploys the /dev/ mirror automatically)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dev/revolving_bands_*.json
+          git commit -m "chore: sync dev rates from Sanity [skip ci]"
+          git push
+
+      - name: Summary
+        run: |
+          echo "Dev mirror: https://1367-studio.github.io/santander-calc/dev/?total=800&lang=fr&autoopen=true"
+          echo "Production files at the repo root were NOT touched."

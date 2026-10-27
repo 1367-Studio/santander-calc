@@ -1,0 +1,74 @@
+name: Sync rates from Sanity
+
+# Triggered by a Sanity webhook (configured in Studio -> API -> Webhooks),
+# filtered on publishToDevOnly != true, calling:
+#   POST https://api.github.com/repos/<owner>/<repo>/dispatches
+#   Authorization: Bearer <a GitHub PAT with "repo" scope>
+#   Accept: application/vnd.github+json
+#   Body: {"event_type": "sanity-rate-sync"}
+# A second webhook (filtered on publishToDevOnly == true) triggers
+# sync-sanity-rates-dev.yml instead — see README. Each edit in Sanity matches
+# exactly one of the two filters.
+#
+# workflow_dispatch is there too so this can be triggered by hand (Actions tab
+# -> this workflow -> Run workflow) to test without touching Sanity.
+#
+# IMPORTANT: the revolving_bands_*.json files this writes are NOT part of the
+# published npm package — they're served directly by GitHub Pages off this
+# branch. So this workflow's only real job is: write the JSON, commit, push.
+# GitHub Pages redeploys on its own (~1 min) — there's no npm publish step.
+on:
+  repository_dispatch:
+    types: [sanity-rate-sync]
+  workflow_dispatch: {}
+
+# Only one of these should ever run at a time — if two rate edits land close
+# together, let the second one supersede/wait rather than race on the same files.
+concurrency:
+  group: sync-sanity-rates
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync rates from Sanity (production — skips publishToDevOnly bands)
+        env:
+          SANITY_PROJECT_ID: ${{ secrets.SANITY_PROJECT_ID }}
+          SANITY_DATASET: ${{ secrets.SANITY_DATASET }}
+          SANITY_READ_TOKEN: ${{ secrets.SANITY_READ_TOKEN }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+        run: node scripts/sync-rates-from-sanity.mjs --target=prod
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet -- revolving_bands_*.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show diff
+        if: steps.diff.outputs.changed == 'true'
+        run: git diff -- revolving_bands_*.json
+
+      - name: Commit and push (GitHub Pages redeploys automatically from this)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add revolving_bands_*.json
+          git commit -m "chore: sync rates from Sanity [skip ci]"
+          git push

@@ -1,0 +1,6 @@
+node_modules/
+.env
+.env.local
+
+studio/node_modules/
+studio/dist/
