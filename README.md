@@ -223,7 +223,11 @@ cover that case.
 ### One-time setup
 
 `studio/` is an already-initialized Sanity Studio (project `0bw3bd6q`, dataset
-`production`). To run it locally: `cd studio && npm install && npm run dev`.
+`production`), deployed at **https://santander-calc.sanity.studio/** — this is the
+URL to hand to whoever edits rates; they log in with their own Sanity account, no
+local setup needed. To run it locally instead (for schema changes): `cd studio &&
+npm install && npm run dev`. After changing the schema, redeploy with `cd studio &&
+npx sanity deploy`.
 
 Root-level setup, if starting fresh:
 1. `cp .env.example .env`, fill in `SANITY_PROJECT_ID=0bw3bd6q`, `SANITY_DATASET=production`,
