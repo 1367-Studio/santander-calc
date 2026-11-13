@@ -29,7 +29,6 @@ api_version = "2027-01"
   compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
 
 [build]
-include_config_on_deploy = true
 # No app server: keep `shopify app dev` from rewriting the URLs above.
 automatically_update_urls_on_dev = false
 
