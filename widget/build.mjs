@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
-const api = process.env.SC_API_BASE || "https://santander-calc-demo.vercel.app";
+const api = process.env.SC_API_BASE || "https://santander-calc.vercel.app";
 const src = (f) => path.join(root, "widget/src", f);
 const out = (f) => path.join(root, f);
 

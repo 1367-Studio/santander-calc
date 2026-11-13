@@ -58,7 +58,7 @@ The monthly rate used in the schedule is never typed in. It's always derived fro
 
 ```html
 <script
-  src="https://santander-calc-demo.vercel.app/v2/loader.js"
+  src="https://santander-calc.vercel.app/v2/loader.js"
   data-total="1250"
   data-lang="fr">
 </script>
@@ -136,7 +136,7 @@ npm run dev:web       # http://localhost:3100
    - Check `https://<app>/api/rate-card`.
    - `npm publish` runs the tests, builds, and replaces `./loader.js` with v2. That moves jsDelivr users over.
    - Commit the new `loader.js` so GitHub Pages serves it as well.
-   - If the production domain isn't `santander-calc-demo.vercel.app`, build with `SC_API_BASE=https://…` first.
+   - If the production domain isn't `santander-calc.vercel.app`, build with `SC_API_BASE=https://…` first.
 4. **Shopify**: `cd shopify && npm install && npm run config:link`, then `npm run deploy`. Use custom distribution until Santander agrees to publish it under its name. Set `SHOPIFY_API_SECRET` on Vercel for the privacy webhooks.
 5. **Retire the v1 pipeline** ([docs/v1-rate-pipeline.md](docs/v1-rate-pipeline.md)) once the Rate Studio is in use. Disable the two Sanity → GitHub Actions webhooks and the `sync-sanity-rates*.yml` workflows. The legacy bands stay visible in the Studio under *Legacy bands*.
 

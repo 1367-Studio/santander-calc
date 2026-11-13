@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 const ORIGIN = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "https://santander-calc-demo.vercel.app";
+  : "https://santander-calc.vercel.app";
 const STUDIO = process.env.NEXT_PUBLIC_STUDIO_URL || "https://santander-calc.sanity.studio";
 
 const pct = (f: number) => `${(f * 100).toLocaleString("fr-BE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} %`;

@@ -7,7 +7,7 @@ import type { Lang, RateCard, Tier } from "./types.ts";
 
 declare const __SC_API__: string;
 /** Replaced at build time; the Vercel deployment that serves /api/rate-card. */
-export const DEFAULT_API = typeof __SC_API__ === "string" ? __SC_API__ : "https://santander-calc-demo.vercel.app";
+export const DEFAULT_API = typeof __SC_API__ === "string" ? __SC_API__ : "https://santander-calc.vercel.app";
 
 const ICON_INFO = `<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8.25" stroke="currentColor" stroke-width="1.5"/><path d="M10 9v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor"/></svg>`;
 const ICON_CLOSE = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9m0-9l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
