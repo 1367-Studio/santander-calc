@@ -1,0 +1,134 @@
+{%- liquid
+  assign lang = request.locale.iso_code
+  if block.settings.language != 'auto'
+    assign lang = block.settings.language
+  endif
+
+  assign label = block.settings.label
+  if label == blank
+    assign lang_short = lang | slice: 0, 2
+    case lang_short
+      when 'nl'
+        assign label = 'Schema bekijken'
+      when 'en'
+        assign label = 'See schedule'
+      when 'de'
+        assign label = 'Plan anzeigen'
+      else
+        assign label = 'Voir l’échéancier'
+    endcase
+  endif
+
+  assign source = block.settings.source
+  if source == 'product' and product == blank
+    assign source = 'cart'
+  endif
+-%}
+
+{%- if source == 'product' -%}
+  {%- assign variant = product.selected_or_first_available_variant -%}
+  <santander-calc
+    data-shopify-source="product"
+    data-product-id="{{ product.id }}"
+    data-variant-id="{{ variant.id }}"
+    data-fallback-price="{{ variant.price }}"
+    data-variant-prices='{ {%- for v in product.variants -%}"{{ v.id }}":{{ v.price }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%} }'
+    amount="{{ variant.price | divided_by: 100.0 }}"
+    lang="{{ lang }}"
+    mode="{{ block.settings.mode }}"
+    primary="{{ block.settings.primary }}"
+    {% if block.settings.label != blank %}label="{{ block.settings.label | escape }}"{% endif %}
+    {% if block.settings.full_width %}width="100%"{% endif %}
+    {% if block.settings.full_width %}style="display:block"{% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.mode == 'button' -%}
+      <button type="button" style="display:inline-flex;align-items:center;justify-content:center;width:{% if block.settings.full_width %}100%{% else %}auto{% endif %};min-height:48px;padding:12px 22px;border:0;border-radius:10px;background:{{ block.settings.primary }};color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer">
+        {{- label | escape -}}
+      </button>
+    {%- endif -%}
+  </santander-calc>
+{%- else -%}
+  <santander-calc
+    data-shopify-source="cart"
+    amount="{{ cart.total_price | divided_by: 100.0 }}"
+    lang="{{ lang }}"
+    mode="{{ block.settings.mode }}"
+    primary="{{ block.settings.primary }}"
+    {% if block.settings.label != blank %}label="{{ block.settings.label | escape }}"{% endif %}
+    {% if block.settings.full_width %}width="100%"{% endif %}
+    {% if block.settings.full_width %}style="display:block"{% endif %}
+    {{ block.shopify_attributes }}
+  >
+    {%- if block.settings.mode == 'button' -%}
+      <button type="button" style="display:inline-flex;align-items:center;justify-content:center;width:{% if block.settings.full_width %}100%{% else %}auto{% endif %};min-height:48px;padding:12px 22px;border:0;border-radius:10px;background:{{ block.settings.primary }};color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer">
+        {{- label | escape -}}
+      </button>
+    {%- endif -%}
+  </santander-calc>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Credit calculator",
+  "target": "content",
+  "javascript": "santander-calc-boot.js",
+  "enabled_on": {
+    "templates": ["product", "cart"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Amount",
+      "options": [
+        { "value": "product", "label": "Product price (selected variant × quantity)" },
+        { "value": "cart", "label": "Cart total" }
+      ],
+      "default": "product",
+      "info": "On the cart page the cart total is always used."
+    },
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Display",
+      "options": [
+        { "value": "button", "label": "Button that opens the schedule" },
+        { "value": "inline", "label": "Schedule shown in the page" }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "select",
+      "id": "language",
+      "label": "Language",
+      "options": [
+        { "value": "auto", "label": "Same as the store" },
+        { "value": "fr", "label": "Français" },
+        { "value": "nl", "label": "Nederlands" },
+        { "value": "en", "label": "English" },
+        { "value": "de", "label": "Deutsch" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "color",
+      "id": "primary",
+      "label": "Accent colour",
+      "default": "#ec0000"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "info": "Leave empty for the translated default (\"Voir l'échéancier\", \"Schema bekijken\"…)."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

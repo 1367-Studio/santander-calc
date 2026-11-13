@@ -1,36 +1,71 @@
 {
   "name": "santander-calc",
-  "version": "1.0.5",
-  "description": "Santander revolving credit calculator widget — React component and vanilla JS loader",
+  "version": "2.0.0",
+  "description": "Santander revolving credit calculator — web component, script-tag loader and React wrapper. Rates are managed by Santander in Sanity.",
+  "type": "module",
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./loader.js": "./loader.js",
+    "./package.json": "./package.json"
+  },
   "files": [
+    "dist/index.js",
     "index.js",
     "index.d.ts",
     "SantanderCalcButton.jsx",
     "loader.js",
     "README.md"
   ],
-  "keywords": ["santander", "revolving", "credit", "calculator", "widget"],
+  "workspaces": [
+    "web"
+  ],
+  "keywords": [
+    "santander",
+    "revolving",
+    "credit",
+    "calculator",
+    "widget",
+    "web-component"
+  ],
   "license": "UNLICENSED",
   "scripts": {
+    "build": "node widget/build.mjs",
+    "test": "node --test 'widget/test/*.test.ts'",
+    "typecheck": "tsc -p widget",
+    "prepublishOnly": "npm test && npm run release:loader",
+    "dev:web": "npm run build && npm run dev -w web",
     "sync:sanity": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --target=prod",
     "sync:sanity:dry-run": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --dry-run --target=prod",
     "sync:sanity:dev": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --target=dev",
     "sync:sanity:dev:dry-run": "node --env-file=.env scripts/sync-rates-from-sanity.mjs --dry-run --target=dev",
-    "seed:sanity": "node --env-file=.env scripts/seed-sanity.mjs"
+    "seed:sanity": "node --env-file=.env scripts/seed-sanity.mjs",
+    "seed:rate-card": "node --env-file=.env scripts/seed-rate-card.mjs",
+    "seed:rate-card:dry-run": "node scripts/seed-rate-card.mjs --dry-run",
+    "release:loader": "node widget/build.mjs --release-loader"
   },
   "peerDependencies": {
     "react": ">=17",
     "react-dom": ">=17"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true },
-    "react-dom": { "optional": true }
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "devDependencies": {
-    "@sanity/client": "^6.24.1"
+    "@sanity/client": "^6.24.1",
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
   },
   "publishConfig": {
     "access": "public"

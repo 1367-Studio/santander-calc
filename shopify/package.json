@@ -1,0 +1,13 @@
+{
+  "name": "santander-calc-shopify",
+  "private": true,
+  "scripts": {
+    "prebuild": "node ../widget/build.mjs",
+    "config:link": "shopify app config link",
+    "dev": "node ../widget/build.mjs && shopify app dev",
+    "deploy": "node ../widget/build.mjs && shopify app deploy"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^5.0.1"
+  }
+}

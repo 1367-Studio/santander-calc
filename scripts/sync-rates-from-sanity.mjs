@@ -89,6 +89,9 @@ function validateRateFields(doc) {
   if (typeof doc.openFeeMonthly !== 'number' || doc.openFeeMonthly < 0 || doc.openFeeMonthly >= 5) {
     errors.push(`openFeeMonthly = ${doc.openFeeMonthly} is outside the sane 0–5% range`)
   }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(doc.rateValidFrom || '')) {
+    errors.push('rateValidFrom is missing')
+  }
   if (!doc.legalLineFr || !doc.legalLineFr.trim()) {
     errors.push('legalLineFr is empty')
   }
@@ -198,6 +201,7 @@ async function main() {
     console.log(`  apr_nominal        : ${data.apr_nominal} -> ${aprNominal}`)
     console.log(`  open_fee_monthly   : ${data.open_fee_monthly} -> ${openFeeMonthly}`)
     console.log(`  monthly_rate       : ${data.monthly_rate} -> ${monthlyRate}`)
+    console.log(`  valid_date         : ${data.valid_date} -> ${doc.rateValidFrom}`)
     console.log(`  sub_ranges         : unchanged (${data.sub_ranges.length} steps)`)
 
     data.apr_representative = aprRepresentative
@@ -205,6 +209,9 @@ async function main() {
     data.open_fee_monthly = openFeeMonthly
     data.monthly_rate = monthlyRate
     data.legal_lines = [doc.legalLineFr]
+    // v1 prints "Taux valable au <valid_date>" and falls back to *today's*
+    // date when this is missing — so it must always be written.
+    data.valid_date = doc.rateValidFrom
 
     if (!dryRun) {
       writeFileSync(filePath, JSON.stringify(data, null, 2) + '\n')

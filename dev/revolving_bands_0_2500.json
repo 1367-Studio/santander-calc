@@ -8,6 +8,7 @@
   "apr_representative": 0.1444,
   "open_fee_monthly": 0.001,
   "monthly_rate": 0.011303446776006476,
+  "valid_date": "2025-05-27",
   "payment_step": 2.5,
   "min_payment": 25,
   "sub_ranges": [

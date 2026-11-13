@@ -1,0 +1,80 @@
+{%- liquid
+  assign lang = request.locale.iso_code
+  if block.settings.language != 'auto'
+    assign lang = block.settings.language
+  endif
+
+  assign label = block.settings.label
+  if label == blank
+    assign lang_short = lang | slice: 0, 2
+    case lang_short
+      when 'nl'
+        assign label = 'Schema bekijken'
+      when 'en'
+        assign label = 'See schedule'
+      when 'de'
+        assign label = 'Plan anzeigen'
+      else
+        assign label = 'Voir l’échéancier'
+    endcase
+  endif
+-%}
+{%- comment -%}
+  Cart drawers can't host app blocks, so this embed hands a config to
+  santander-calc-boot.js, which places a "see schedule" button just above the
+  drawer's checkout button(s) whenever the drawer renders.
+{%- endcomment -%}
+<script type="application/json" id="santander-calc-drawer">
+  {
+    "selector": {{ block.settings.selector | json }},
+    "label": {{ label | json }},
+    "attrs": {
+      "lang": {{ lang | json }},
+      "primary": {{ block.settings.primary | json }},
+      "label": {{ block.settings.label | json }},
+      "width": "100%"
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Cart drawer button",
+  "target": "body",
+  "javascript": "santander-calc-boot.js",
+  "settings": [
+    {
+      "type": "text",
+      "id": "selector",
+      "label": "Checkout button selector",
+      "default": "cart-drawer [name='checkout'], #CartDrawer [name='checkout'], .cart-drawer [name='checkout'], [data-cart-drawer] [name='checkout']",
+      "info": "CSS selector of the drawer's checkout button. The default covers Dawn and most Online Store 2.0 themes."
+    },
+    {
+      "type": "select",
+      "id": "language",
+      "label": "Language",
+      "options": [
+        { "value": "auto", "label": "Same as the store" },
+        { "value": "fr", "label": "Français" },
+        { "value": "nl", "label": "Nederlands" },
+        { "value": "en", "label": "English" },
+        { "value": "de", "label": "Deutsch" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "color",
+      "id": "primary",
+      "label": "Accent colour",
+      "default": "#ec0000"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Button label",
+      "info": "Leave empty for the translated default."
+    }
+  ]
+}
+{% endschema %}

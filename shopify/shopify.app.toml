@@ -1,0 +1,33 @@
+# Santander Credit Calculator — extension-only Shopify app.
+#
+# There is no app server: the theme app extension (extensions/santander-calc)
+# bundles the widget, and the widget reads live rates from the Vercel app's
+# /api/rate-card. Rates therefore change without redeploying this app.
+#
+# First time: `npm run config:link` to create/link the app in the Shopify
+# Dev Dashboard — it fills in client_id. Then `npm run deploy`.
+
+client_id = ""
+name = "Santander Credit Calculator"
+handle = "santander-credit-calculator"
+application_url = "https://shopify.dev/apps/default-app-home"
+embedded = true
+
+[access_scopes]
+# Reads nothing from the Admin API — cart and product data come from Liquid
+# and the storefront's own /cart.js.
+scopes = ""
+
+[webhooks]
+api_version = "2026-10"
+
+  # Mandatory privacy webhooks (required for an App Store listing). The app
+  # stores no customer or shop data; the Vercel endpoint verifies the HMAC
+  # and acknowledges.
+  [[webhooks.subscriptions]]
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
+  uri = "https://santander-calc-demo.vercel.app/api/shopify/webhooks"
+
+[build]
+include_config_on_deploy = true
+automatically_update_urls_on_dev = false
