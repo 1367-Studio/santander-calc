@@ -1,7 +1,8 @@
 # Shopify App Store listing — Santander Credit Calculator
 
 Everything entered in the Partner Dashboard listing (English, primary). Character
-limits are Shopify's. Assets are in this folder.
+limits are Shopify's. Assets are in this folder. Shopify's checker flags "cost"
+and "monthly" as pricing words outside the pricing section, so the copy avoids them.
 
 ## Assets
 
@@ -21,16 +22,16 @@ design and does not use Santander's logo.
 ## Basic app information
 
 - **App name** (30): Santander Credit Calculator
-- **Primary category**: Store design → Product display *(pick the closest available)*
+- **Primary category**: Store design → Product display → Product display - Other
 - **Languages**: English (admin page). The storefront calculator speaks FR, NL, EN and DE.
 
 ## Listing content
 
 **Introduction** (100)
-> Show what buying on Santander credit costs per month. Shoppers see the full schedule before buying.
+> Show shoppers the Santander credit repayment schedule. They see every instalment before buying.
 
 **App details** (500)
-> Belgian shoppers often want to know what a purchase will cost each month before they buy. This app adds Santander's revolving credit calculator to your theme. Shoppers see a month-by-month repayment schedule for the product or cart amount, with the APR (TAEG), the representative example and the mandatory warning. Santander updates the rates centrally, so they're always current in your store. You choose the language, colours and whether the schedule opens in a pop-up or shows in the page.
+> Belgian shoppers often want to know what they would repay each month before they buy. This app adds Santander's revolving credit calculator to your theme. Shoppers see a month-by-month repayment schedule for the product or cart amount, with the APR (TAEG), the representative example and the mandatory warning. Santander updates the rates centrally, so they're always current in your store. You choose the language, colours and whether the schedule opens in a pop-up or shows in the page.
 
 **Features** (80 each)
 1. Repayment schedule for the selected variant, quantity or full cart total
@@ -38,6 +39,8 @@ design and does not use Santander's logo.
 3. Rates updated centrally by Santander, with nothing to update in your store
 4. Product page, cart page and cart drawer placements, inline or in a pop-up
 5. Available in French, Dutch, English and German, with your own accent colour
+
+**Feature image alt text**: Monthly repayment schedule shown on a product page
 
 **Screenshot alt text** (64 each)
 1. Product page with the repayment schedule pop-up open
@@ -53,14 +56,14 @@ design and does not use Santander's logo.
 
 ## Pricing
 
-- One public plan: **Free**
+- One public plan: **Free** (handle `free`, redirect `/shopify`)
 
 ## App discovery
 
-- **App card subtitle** (62): Show the monthly cost of Santander credit on product pages
+- **App card subtitle** (62): Show Santander credit repayment schedules on product pages
 - **Search terms** (20 each): credit calculator · financing · installments · payment schedule · consumer credit
-- **Title tag** (60): Santander Credit Calculator – monthly payment schedule
-- **Meta description** (160): Show Belgian shoppers the monthly repayment schedule, APR and legal notice for Santander revolving credit on product, cart and cart drawer pages.
+- **Title tag** (60): Santander Credit Calculator – repayment schedule
+- **Meta description** (160): Show Belgian shoppers the repayment schedule, APR and legal notice for Santander revolving credit on product, cart and cart drawer pages.
 
 ## Install requirements
 
@@ -86,3 +89,7 @@ No account needed. Instructions for the reviewer:
 > Rates come from Santander's rate service at santander-calc.vercel.app and are
 > the same for every store. The app shows a simulation only and does not offer
 > financing at checkout.
+
+## Still to provide
+
+- **Screencast URL** (required): a 3–8 minute YouTube video (unlisted is fine) showing install → admin page → adding the block → the schedule on a product page and in the cart drawer.
