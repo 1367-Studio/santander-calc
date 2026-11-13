@@ -90,6 +90,15 @@ No account needed. Instructions for the reviewer:
 > the same for every store. The app shows a simulation only and does not offer
 > financing at checkout.
 
-## Still to provide
+## Screencast
 
-- **Screencast URL** (required): a 3–8 minute YouTube video (unlisted is fine) showing install → admin page → adding the block → the schedule on a product page and in the cart drawer.
+- URL: https://1367-studio.github.io/santander-calc/app-store/santander-credit-calculator-screencast.mp4
+  (2:57, served by GitHub Pages from `main`). Built from real captures of the
+  install → app home → theme editor block → schedule pop-up → legal text →
+  inline/Dutch → cart-drawer embed flow on the `1367-studio` dev store, plus two
+  demo-shop frames for the cart drawer and the French pop-up.
+
+## Screenshots in the listing
+
+Screenshot 1 (a copy of the feature image) was removed. The listing has 3:
+pop-up on a product page, cart drawer button, German legal text.
