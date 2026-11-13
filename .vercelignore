@@ -6,3 +6,4 @@ shopify/.shopify
 dist
 .env
 **/.env.local
+docs/app-store

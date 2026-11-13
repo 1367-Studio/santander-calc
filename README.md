@@ -107,9 +107,9 @@ The blocks load a 1.9 KB script. The full widget (9 KB brotli) downloads only wh
 
 ```
 widget/   calculation engine, validation, <santander-calc> element, loaders  (TypeScript, zero dependencies)
-web/      Vercel app: partner page, /api/rate-card, Sanity + Shopify webhooks  (Next.js 16)
+web/      Vercel app: partner page, /api/rate-card, Shopify app home, webhooks  (Next.js 16)
 studio/   Rate Studio schema, structure and preview                             (Sanity v6)
-shopify/  extension-only Shopify app: theme app extension                       (Shopify CLI)
+shopify/  Shopify app: theme app extension; app home served by web/ at /shopify  (Shopify CLI)
 scripts/  seed-rate-card.mjs (v2) · sync/seed scripts of the v1 JSON pipeline
 *.json, index.html, santander-revolving.{js,css}, loader.js
           v1 widget, still served by GitHub Pages for existing installs — don't move them
@@ -137,7 +137,7 @@ npm run dev:web       # http://localhost:3100
    - `npm publish` runs the tests, builds, and replaces `./loader.js` with v2. That moves jsDelivr users over.
    - Commit the new `loader.js` so GitHub Pages serves it as well.
    - If the production domain isn't `santander-calc.vercel.app`, build with `SC_API_BASE=https://…` first.
-4. **Shopify**: `cd shopify && npm install && npm run config:link`, then `npm run deploy`. Use custom distribution until Santander agrees to publish it under its name. Set `SHOPIFY_API_SECRET` on Vercel for the privacy webhooks.
+4. **Shopify**: set `SHOPIFY_API_SECRET` on Vercel (privacy webhooks + the admin page's session tokens) and deploy the web app first, so `https://santander-calc.vercel.app/shopify` is live. Then `cd shopify && npm install && npm run config:link` and `npm run deploy`. The app home (`web/app/shopify/route.ts`) is one embedded page with App Bridge and Polaris web components: it verifies the session token via `/api/shopify/session` and deep-links to the theme editor to add the block or turn on the cart-drawer embed. An App Store listing needs this page; extension-only apps can only use custom distribution. App Store assets and listing copy are in `docs/app-store/`.
 5. **Retire the v1 pipeline** ([docs/v1-rate-pipeline.md](docs/v1-rate-pipeline.md)) once the Rate Studio is in use. Disable the two Sanity → GitHub Actions webhooks and the `sync-sanity-rates*.yml` workflows. The legacy bands stay visible in the Studio under *Legacy bands*.
 
 ### Why v1 never became a Shopify app

@@ -1,8 +1,10 @@
-# Santander Credit Calculator — extension-only Shopify app.
+# Santander Credit Calculator — Shopify app.
 #
-# There is no app server: the theme app extension (extensions/santander-calc)
-# bundles the widget, and the widget reads live rates from the Vercel app's
-# /api/rate-card. Rates therefore change without redeploying this app.
+# The theme app extension (extensions/santander-calc) bundles the widget, and
+# the widget reads live rates from the Vercel app's /api/rate-card, so rates
+# change without redeploying this app. The app home is a single embedded page
+# served by the same Vercel app (web/app/shopify) — required for an App Store
+# listing, which extension-only apps can't have.
 #
 # Linked to the "Santander Credit Calculator" app (1367 Studio) in the Shopify
 # Dev Dashboard. Deploy with `npm run deploy`.
@@ -10,7 +12,7 @@
 client_id = "4633f83c88257455f6bc563f997fb4bc"
 name = "Santander Credit Calculator"
 handle = "santander-credit-calculator"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://santander-calc.vercel.app/shopify"
 embedded = true
 
 [access_scopes]
@@ -29,8 +31,10 @@ api_version = "2027-01"
   compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
 
 [build]
-# No app server: keep `shopify app dev` from rewriting the URLs above.
+# The app home is on Vercel: keep `shopify app dev` from rewriting the URLs.
 automatically_update_urls_on_dev = false
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+# Shopify-managed installation: no OAuth callback is used, but a redirect URL
+# on the app's own domain is still required.
+redirect_urls = [ "https://santander-calc.vercel.app/api/auth" ]
