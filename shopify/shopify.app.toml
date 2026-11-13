@@ -4,10 +4,10 @@
 # bundles the widget, and the widget reads live rates from the Vercel app's
 # /api/rate-card. Rates therefore change without redeploying this app.
 #
-# First time: `npm run config:link` to create/link the app in the Shopify
-# Dev Dashboard — it fills in client_id. Then `npm run deploy`.
+# Linked to the "Santander Credit Calculator" app (1367 Studio) in the Shopify
+# Dev Dashboard. Deploy with `npm run deploy`.
 
-client_id = ""
+client_id = "4633f83c88257455f6bc563f997fb4bc"
 name = "Santander Credit Calculator"
 handle = "santander-credit-calculator"
 application_url = "https://shopify.dev/apps/default-app-home"
@@ -19,15 +19,19 @@ embedded = true
 scopes = ""
 
 [webhooks]
-api_version = "2026-10"
+api_version = "2027-01"
 
   # Mandatory privacy webhooks (required for an App Store listing). The app
   # stores no customer or shop data; the Vercel endpoint verifies the HMAC
   # and acknowledges.
   [[webhooks.subscriptions]]
-  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
   uri = "https://santander-calc.vercel.app/api/shopify/webhooks"
+  compliance_topics = [ "customers/data_request", "customers/redact", "shop/redact" ]
 
 [build]
 include_config_on_deploy = true
+# No app server: keep `shopify app dev` from rewriting the URLs above.
 automatically_update_urls_on_dev = false
+
+[auth]
+redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
